@@ -51,7 +51,7 @@ router.get('/questions',checkAuth,(req,res) =>{
             throw error
         }
         response.status(201).json(results.rows);
-        
+
     });
 
 });
