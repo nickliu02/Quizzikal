@@ -32,7 +32,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <router-link v-bind:to="item.route"><v-list-item-title>{{ item.title }}</v-list-item-title></router-link>
+              <v-list-item-title><router-link v-bind:to="item.route">{{ item.title }}</router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
