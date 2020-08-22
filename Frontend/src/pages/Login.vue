@@ -22,12 +22,29 @@
                                         label="Login"
                                         name="login"
                                         prepend-icon="mdi-account"
+                                        hint="Dororo hentai"
                                         type="text"
+                                        v-model="username"
                                     >
-
                                     </v-text-field>
+
+                                    <v-text-field
+                                        id="password"
+                                        label="Password"
+                                        name="password"
+                                        
+                                        prepend-icon="mdi-lock"
+                                        v-model="password"
+                                        type="password"
+                                    ></v-text-field>
+
+                                    
                                 </v-form>
                             </v-card-text>
+                            <v-card-actions>
+                                <v-btn color="secondary" @click="onLogin">Log In</v-btn>
+                                <v-btn color="accent" :to="registerR">Sign up here!</v-btn>
+                            </v-card-actions>
                         </v-card>
 
                     </v-col>
@@ -42,6 +59,19 @@
 
 <script>
 export default {
-    name: "Login"
+    name: "Login",
+    data(){
+        return {
+            username : "",
+            password : "",
+            registerR : "/register"
+        }
+    },
+    methods : {
+        onLogin(e){
+            e.preventDefault()
+            localStorage.setItem('jwt',"placeholder token")
+        }
+    }
 }
 </script>

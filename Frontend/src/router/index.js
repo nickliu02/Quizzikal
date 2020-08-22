@@ -9,15 +9,51 @@ import Home from "../components/Home.vue";
 Vue.use(Router);
 
 
-export default new Router({
+let router = new Router({
   routes: [
     {path: "/", name:"Home",component: Home},
-    {path: "/login", name: "Login", component: Login},
-    {path: "/register", name: "Register", component: Register},
-    {path: "/play", name: "Play", component: Play},
-    {path: "/profile", name: "Profile", component: Profile},
-    {path: "/contribute", name: "Contribute", component: Contribute},
+    {path: "/login", name: "Login", component: Login,meta:{
+      guest: true
+    }},
+    {path: "/register", name: "Register", component: Register, meta:{
+      guest: true
+    }},
+    {path: "/play", name: "Play", component: Play, meta: {
+      auth: true
+    }},
+    {path: "/profile", name: "Profile", component: Profile, meta: {
+      auth: true
+    }},
+    {path: "/contribute", name: "Contribute", component: Contribute, meta: {
+      auth: true
+    }},
   ],
   mode: "history",
-  linkExactActiveClass: "active",
 });
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.auth)){
+    if (localStorage.getItem('jwt') == null){
+      next({
+        path: '/login',
+        params: { nextUrl: to.fullPath}
+      })
+    }
+    else{
+      next()
+    }
+  }
+  else if(to.matched.some(record => record.meta.guest)){
+    if(localStorage.getItem('jwt') == null){
+      next()
+    }
+    else{
+      next({name: 'Home'})
+    }
+  }
+  else{
+    next()
+  }
+})
+
+export default router

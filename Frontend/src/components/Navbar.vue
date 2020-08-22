@@ -5,6 +5,7 @@
         app
         color="primary"
         dark
+        expand-on-hover
         >
         <v-list-item>
             <v-list-item-content>
