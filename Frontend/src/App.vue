@@ -9,7 +9,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
-            Temp Name
+            Quizzikal
           </v-list-item-title>
           <v-list-item-subtitle>
             subtext
@@ -17,25 +17,29 @@
         </v-list-item-content>
       </v-list-item>
 
-
-      <v-list
-        dense
-        nav
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
+      <div id="nav"> 
+        <v-list
+          dense
+          nav
         >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+            <v-list-item-content>
+              <router-link v-bind:to="item.route"><v-list-item-title>{{ item.title }}</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
+        <router-view></router-view>
+      </div>
+      
 
     </v-navigation-drawer>
 
@@ -59,9 +63,9 @@ export default {
 
   data: () => ({
     items: [
-      { title: "Play", icon: mdiPlay },
-      { title: "Contribute", icon: mdiPencilBoxMultiple },
-      { title: "Profile", icon: mdiAccountCircle },
+      { title: "Play", icon: mdiPlay, route: "/play" },
+      { title: "Contribute", icon: mdiPencilBoxMultiple, route: "/contribute" },
+      { title: "Profile", icon: mdiAccountCircle, route: "/profile" },
       { title: "Logout", icon: mdiLogoutVariant }
     ]
   }),
