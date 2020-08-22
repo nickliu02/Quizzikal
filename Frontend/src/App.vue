@@ -26,26 +26,28 @@
             v-for="item in items"
             :key="item.title"
             link
+            :to="item.route"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title><router-link v-bind:to="item.route">{{ item.title }}</router-link></v-list-item-title>
+  
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
 
-        <router-view></router-view>
       </div>
+
       
 
     </v-navigation-drawer>
-
+    
 
     <v-main>
-      
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
