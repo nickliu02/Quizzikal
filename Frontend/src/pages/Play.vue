@@ -5,7 +5,7 @@
 
         <div id="buttons">
           <div>
-            <v-btn depressed x-large color="accent" @click.stop="isNewChallengeModalOpen = true">New Challenge</v-btn>
+            <v-btn depressed x-large color="accent" @click.stop="isNewChallengeModalOpen = true, selectedSubjects=[false, false, false, false, false, false]">New Challenge</v-btn>
           </div>
 
           <div>
@@ -15,49 +15,129 @@
         </div>
 
 
-        <div id="challenges">
-          <v-card
-            class="mx-auto"
-            width="250"
-          >
-            <v-card-title class="white--text black">
-              Challenges
-
-              <v-spacer></v-spacer>
-            </v-card-title>
-
-            <v-virtual-scroll
-              :items="challenges"
-              :item-height="50"
-              height="300"
+        <div id="scrollers">
+          <div id="challenges">
+            <v-card
+              class="mx-auto"
               width="250"
-              
-            > 
+            >
+              <v-card-title class="white--text black">
+                Incoming Challenges
 
-            <template v-slot="{ item }">
-              <v-list-item>
+                <v-spacer></v-spacer>
+              </v-card-title>
 
-                <v-list-item-content>
-                  <v-list-item-title>{{ item.player }}</v-list-item-title>
-                  
-                </v-list-item-content>
+              <v-virtual-scroll
+                :items="challenges"
+                :item-height="50"
+                height="300"
+                width="250"
+                
+              > 
+              <template v-slot="{ item }">
+                <v-list-item>
 
-                <v-list-item-action>
-                  <v-btn
-                    depressed
-                    small
-                    @click.stop="openChallengeModal(item)"
-                  >
-                    View
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </template>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    
+                  </v-list-item-content>
 
-            </v-virtual-scroll>
-          </v-card>
+                  <v-list-item-action>
+                    <v-btn
+                      depressed
+                      small
+                      @click.stop="openChallengeModal(item)"
+                    >
+                      View
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
 
-          <v-dialog
+              </v-virtual-scroll>
+            </v-card>
+          </div>
+        </div>
+
+        <div id="ongoingChallenges">
+            <v-card
+              class="mx-auto"
+              width="250"
+            >
+              <v-card-title class="white--text black">
+                Ongoing Challenges
+
+                <v-spacer></v-spacer>
+              </v-card-title>
+
+              <v-virtual-scroll
+                :items="ongoingChallenges"
+                :item-height="50"
+                height="300"
+                width="250"
+                
+              > 
+              <template v-slot="{ item }">
+                <v-list-item>
+
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    
+                  </v-list-item-content>
+
+                  <v-list-item-action>
+                    <v-btn
+                      depressed
+                      small
+                      @click.stop="openChallengeModal(item)"
+                    >
+                      View
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+
+              </v-virtual-scroll>
+            </v-card>
+        </div>
+
+        <div id="completedChallenges">
+            <v-card
+              class="mx-auto"
+              width="250"
+            >
+              <v-card-title class="white--text black">
+                Completed Challenges
+
+                <v-spacer></v-spacer>
+              </v-card-title>
+
+              <v-virtual-scroll
+                :items="completedChallenges"
+                :item-height="50"
+                height="300"
+                width="250"
+                
+              > 
+              <template v-slot="{ item }">
+                <v-list-item>
+
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    
+                  </v-list-item-content>
+
+
+                </v-list-item>
+              </template>
+
+              </v-virtual-scroll>
+            </v-card>
+          </div>
+
+        </div>
+
+      <v-dialog
             v-model="isChallengeModalOpen"
             max-width="350"
           >
@@ -66,49 +146,12 @@
               <v-card-title class="headline justify-center">Challenge from {{ modalInfo.player }}
 
                 <div id="icons">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[0], notActive: !modalInfo.categories[0] }">{{ mdiDna }}</v-icon>
-                    </template>
-                    <span>Biology</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[1], notActive: !modalInfo.categories[1] }">{{ mdiFlask }}</v-icon>
-                    </template>
-                    <span>Chemistry</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[2], notActive: !modalInfo.categories[2] }">{{ mdiAtom }}</v-icon>
-                    </template>
-                    <span>Physics</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[3], notActive: !modalInfo.categories[3] }">{{ mdiMathIntegralBox }}</v-icon>
-                    </template>
-                    <span>Math</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[4], notActive: !modalInfo.categories[4] }">{{ mdiBookOpenBlankVariant }}</v-icon>
-                    </template>
-                    <span>English</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[5], notActive: !modalInfo.categories[5] }">{{ mdiPillar }}</v-icon>
-                    </template>
-                    <span>History</span>
-                  </v-tooltip>
-
-                
+                    <v-tooltip bottom v-for="(subject, i) in subjects" v-bind:key="i">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon v-bind="attrs" hover="false" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[i], notActive: !modalInfo.categories[i] }">{{ subject.icon }}</v-icon>
+                      </template>
+                      <span>{{ subject.name }}</span>
+                    </v-tooltip>
                 </div>
               </v-card-title>
 
@@ -133,115 +176,112 @@
             </v-card>
           </v-dialog>
 
-          <v-dialog
-            v-model="isNewChallengeModalOpen"
-            max-width="350"
-          >
+        <v-dialog
+          v-model="isNewChallengeModalOpen"
+          max-width="350"
+        >
 
-            <v-card id="modal">
-              <v-card-title class="headline justify-center">New Challenge
+          <v-card id="modal">
+            <v-card-title class="headline justify-center">New Challenge
+              <div id="selectIcons">
+              
+                  <v-text-field
+                    label="Opponent Username"
+                    single-line
+                    color="blue"
+                    v-model="opponentUsername"
+                  ></v-text-field>
                 
 
-                <div id="icons">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[0], notActive: !modalInfo.categories[0] }">{{ mdiDna }}</v-icon>
-                    </template>
-                    <span>Biology</span>
-                  </v-tooltip>
+                <v-tooltip bottom v-for="(subject, i) in subjects" v-bind:key="i">
+                  <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" 
+                        x-large v-bind:class="{ active: selectedSubjects[i], notActive: !selectedSubjects[i] }"
+                        v-on:click="selectedSubjects[i] = !selectedSubjects[i]"
+                      >{{ subject.icon }}</v-icon>
+                  </template>
+                  <span>{{ subject.name }}</span>
+                </v-tooltip>
+              </div>
+            </v-card-title>
 
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[1], notActive: !modalInfo.categories[1] }">{{ mdiFlask }}</v-icon>
-                    </template>
-                    <span>Chemistry</span>
-                  </v-tooltip>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="red darken-1"
+                text
+                @click="isNewChallengeModalOpen = false"
+              >
+                  Cancel
+              </v-btn>
 
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[2], notActive: !modalInfo.categories[2] }">{{ mdiAtom }}</v-icon>
-                    </template>
-                    <span>Physics</span>
-                  </v-tooltip>
+              <v-btn
+                color="green darken-1"
+                text
+                @click="isNewChallengeModalOpen = false"
+              >
+                  Send!
+              </v-btn>
+            </v-card-actions>
+          </v-card>
 
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[3], notActive: !modalInfo.categories[3] }">{{ mdiMathIntegralBox }}</v-icon>
-                    </template>
-                    <span>Math</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[4], notActive: !modalInfo.categories[4] }">{{ mdiBookOpenBlankVariant }}</v-icon>
-                    </template>
-                    <span>English</span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[5], notActive: !modalInfo.categories[5] }">{{ mdiPillar }}</v-icon>
-                    </template>
-                    <span>History</span>
-                  </v-tooltip>
-
-                
-                </div>
-              </v-card-title>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="red darken-1"
-                  text
-                  @click="isNewChallengeModalOpen = false"
-                >
-                    Cancel
-                </v-btn>
-
-                <v-btn
-                  color="green darken-1"
-                  text
-                  @click="isNewChallengeModalOpen = false"
-                >
-                    Send!
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-
-          </v-dialog>
-
-        </div>
-      </div>
+        </v-dialog>
   </v-app>    
 </template>
 
 <script>
-import { mdiDna, mdiFlask, mdiMathIntegralBox, mdiBookOpenBlankVariant, mdiAtom, mdiPillar  } from '@mdi/js';
+import { mdiDna, mdiFlask, mdiMathIntegralBox, mdiBookOpenBlankVariant, mdiAtom, mdiPillar, mdiBook  } from '@mdi/js';
 
 export default {
   data() {
     return {
-      mdiDna: mdiDna,
-      mdiFlask: mdiFlask,
-      mdiMathIntegralBox: mdiMathIntegralBox,
-      mdiBookOpenBlankVariant: mdiBookOpenBlankVariant,
-      mdiAtom: mdiAtom,
-      mdiPillar: mdiPillar,
       // categories: [Biology, Chemistry, Physics, Math, English, History]
       challenges: [
-        { player: "lolxd", categories: [true, false, true, false, false, false] },
-        { player: "ayylmao", categories: [false, false, true, false, false, true] },
-        { player: "lolxd", categories: [true, false, true, false, false, false] },
-        { player: "ayylmao", categories: [false, false, true, false, false, true] },
-        { player: "lolxd", categories: [true, false, true, false, false, false] },
-        { player: "ayylmao", categories: [false, false, true, false, false, true] },
+        { player: "a", categories: [true, false, true, false, false, false] },
+        { player: "wgher", categories: [false, false, true, false, false, true] },
+        { player: "tehth", categories: [true, false, true, false, false, false] },
+        { player: "rv4tw", categories: [false, false, true, false, false, true] },
+        { player: "zhavt4", categories: [true, false, true, false, false, false] },
+        { player: "12avt4345", categories: [false, false, true, false, false, true] },
+      ],
+
+      ongoingChallenges: [
+        { player: "awgeew", categories: [true, false, true, false, false, false] },
+        { player: "wgher", categories: [false, false, true, false, false, true] },
+        { player: "srhdsrd", categories: [true, false, true, false, false, false] },
+        { player: "rhxeh", categories: [false, false, true, false, false, true] },
+        { player: "zhdrhwh", categories: [true, false, true, false, false, false] },
+        { player: "12345", categories: [false, false, true, false, false, true] },
+      ],
+
+      completedChallenges: [
+        { player: "awge34yew" },
+        { player: "wgh5her" },
+        { player: "srhd5ysrd" },
+        { player: "rhx5h4eh" },
+        { player: "zhdrh54hwh"},
+        { player: "12ger345" },
+      ],
+
+      subjects: [
+        { name: "Biology", icon: mdiDna},
+        { name: "Chemistry", icon: mdiFlask},
+        { name: "Physics", icon: mdiAtom},
+        { name: "Math", icon: mdiMathIntegralBox},
+        { name: "English", icon: mdiBook},
+        { name: "History", icon: mdiPillar},
       ],
 
       isChallengeModalOpen: false,
       modalInfo: { player: "", categories: [] },
 
+      isOngoingChallengeModalOpen: false,
+      modalInfo: { player: "", categories: [] },
+
       isNewChallengeModalOpen: false,
+      selectedSubjects: [false, false, false, false, false],
+
+      opponentUsername: "",
     }
   },
 
@@ -258,6 +298,12 @@ export default {
       this.isChallengeModalOpen = true;
       this.modalInfo = info;
     },
+
+    openOngoingChallengeModal(info) {
+      this.isOngoingChallengeModalOpen = true;
+      this.ongoingModalInfo = info;
+    },
+
   }
 }
 </script>
@@ -284,7 +330,7 @@ export default {
 }
 
 #challenges {
-  margin: 35px auto;
+  text-align: left;
 }
 
 #icons {
@@ -300,4 +346,17 @@ export default {
   color: black
 }
 
+.clickIcon {
+  width: 100%;
+  height: 100%;
+}
+
+v-tooltip {
+  cursor: normal;
+}
+
+#scrollers {
+  margin: 0 auto;
+  flex-direction: row;
+}
 </style>
