@@ -24,7 +24,8 @@
                                         prepend-icon="mdi-account"
                                         hint="Dororo hentai"
                                         type="text"
-                                        v-model="username"
+                                        maxlength="12"
+                                        v-model="form.username"
                                     >
                                     </v-text-field>
 
@@ -34,8 +35,9 @@
                                         name="password"
                                         
                                         prepend-icon="mdi-lock"
-                                        v-model="password"
+                                        v-model="form.password"
                                         type="password"
+                                        maxlength="12"
                                     ></v-text-field>
 
                                     
@@ -62,25 +64,39 @@ export default {
     name: "Login",
     data(){
         return {
-            username : "",
-            password : "",
+            form: {
+                username : "",
+                password : ""
+            },
+            
             registerR : "/register"
         }
     },
     methods : {
         onLogin(e){
             e.preventDefault()
-            localStorage.setItem('jwt',"placeholder token")
-            if (localStorage.getItem('jwt') !=null){
-                console.log(this.$route.params)
-                if(localStorage.getItem('nextUrl')!= null){
-                    this.$router.push(localStorage.getItem('nextUrl'))
+            const form = this.form;
+            if (form.password.length>0 && form.username.length>0){
+                this.$axios.post(this.$API_URL+"/login", {
+                        ...form
+                    })
+                .then(response => {
+                    localStorage.setItem('jwt',response.data.token)                  
+                    if (localStorage.getItem('jwt') !=null){
+                        if(localStorage.getItem('nextUrl')!= null){
+                            this.$router.push(localStorage.getItem('nextUrl'))
+                        }
+                        else{
+                            this.$router.push('Home')
+                        }
+                    }
                     
-                }
-                else{
-                    this.$router.push('Home')
-                }
+                
+            })
+
             }
+            
+
             
         }
     }

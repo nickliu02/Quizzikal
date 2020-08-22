@@ -1,6 +1,7 @@
 {
   "name": "ignitionhacks",
   "version": "0.1.0",
+  "baseUrl": "src",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,6 +9,7 @@
   },
   "dependencies": {
     "@mdi/js": "^5.5.55",
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.4.3",

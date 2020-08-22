@@ -21,18 +21,26 @@
                                     <v-text-field
                                         label="Username"
                                         name="username"
+                                        
                                         prepend-icon="mdi-account"
                                         hint="Dororo hentai"
                                         type="text"
-                                        v-model="username"
+                                        maxlength="25"
+                                        counter
+                                        v-model="form.username"
+                                        :rules="[rules.required, rules.min, rules.max]"
                                     >
                                     </v-text-field>
                                     <v-text-field
                                         label="Name"
                                         name="name"
+                                        
                                         prepend-icon="mdi-form-textbox"
                                         type="text"
-                                        v-model="name"
+                                        maxlength="25"
+                                        counter
+                                        v-model="form.name"
+                                        :rules="[rules.required, rules.min]"
                                     >
                                     </v-text-field>
                                     <v-text-field
@@ -40,9 +48,24 @@
                                         label="Password"
                                         name="password"
                                         
+                                        maxlength="25"
+                                        counter
                                         prepend-icon="mdi-lock"
-                                        v-model="password"
+                                        v-model="form.password"
                                         type="password"
+                                        :rules="[rules.required, rules.min]"
+                                    ></v-text-field>
+                                    <v-text-field
+                                        id="passwordconfirm"
+                                        label="Confirm Password"
+                                        name="passwordconfirm"
+                                        
+                                        maxlength="12"
+                                        counter
+                                        prepend-icon="mdi-lock"
+                                        v-model="form.otherpass"
+                                        type="password"
+                                        :rules="[rules.required, rules.min, (form.otherpass === form.password) || 'Password must match']"
                                     ></v-text-field>
 
                                     <v-btn color="secondary" @click="onRegister">Register</v-btn>
@@ -62,20 +85,49 @@
 </template>
 
 <script>
+
 export default {
     name: "Register",
     data(){
         return {
-            username : "",
-            name: "",
-            password : ""
+            form : {
+              username : "",
+              name: "",
+              password : "",
+              otherpass: ""
+            },
+            rules: {
+              required: value => !!value || 'Required.',
+              min: val => val.length >= 8 || 'Min 8 characters'
+
+              
+            }
+            
         }
     },
+    
     methods : {
         onRegister(e){
             e.preventDefault()
-            console.log("registered")
-            localStorage.setItem('jwt',"placeholder token")
+            console.log("registering")
+            const form = this.form;
+            if (0<form.username.length && form.username.length<=12 && 0<form.password.length  && form.password.length<=12 && form.password===form.otherpass){
+              this.$axios.post(this.$API_URL+"/register", {
+                          ...form
+                      })
+              .then(response => {
+                  localStorage.setItem('jwt',response.data.token)
+                  if (localStorage.getItem('jwt') !=null){
+                    
+                    this.$router.push('Home')
+                  
+                }
+              })
+              .catch(e => console.log(e))
+            }
+
+            
+            
         }
     }
 }
