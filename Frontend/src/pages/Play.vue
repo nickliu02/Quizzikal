@@ -15,90 +15,127 @@
         </div>
 
 
-        <div id="challenges">
-          <v-card
-            class="mx-auto"
-            width="250"
-          >
-            <v-card-title class="white--text black">
-              Incoming Challenges
-
-              <v-spacer></v-spacer>
-            </v-card-title>
-
-            <v-virtual-scroll
-              :items="challenges"
-              :item-height="50"
-              height="300"
+        <div id="scrollers">
+          <div id="challenges">
+            <v-card
+              class="mx-auto"
               width="250"
-              
-            > 
-            <template v-slot="{ item }">
-              <v-list-item>
+            >
+              <v-card-title class="white--text black">
+                Incoming Challenges
 
-                <v-list-item-content>
-                  <v-list-item-title>{{ item.player }}</v-list-item-title>
-                  
-                </v-list-item-content>
+                <v-spacer></v-spacer>
+              </v-card-title>
 
-                <v-list-item-action>
-                  <v-btn
-                    depressed
-                    small
-                    @click.stop="openChallengeModal(item)"
-                  >
-                    View
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </template>
+              <v-virtual-scroll
+                :items="challenges"
+                :item-height="50"
+                height="300"
+                width="250"
+                
+              > 
+              <template v-slot="{ item }">
+                <v-list-item>
 
-            </v-virtual-scroll>
-          </v-card>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    
+                  </v-list-item-content>
+
+                  <v-list-item-action>
+                    <v-btn
+                      depressed
+                      small
+                      @click.stop="openChallengeModal(item)"
+                    >
+                      View
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+
+              </v-virtual-scroll>
+            </v-card>
+          </div>
         </div>
-      </div>
 
-      <div id="ongoingChallenges">
-          <v-card
-            class="mx-auto"
-            width="250"
-          >
-            <v-card-title class="white--text black">
-              Ongoing Challenges
-
-              <v-spacer></v-spacer>
-            </v-card-title>
-
-            <v-virtual-scroll
-              :items="ongoingChallenges"
-              :item-height="50"
-              height="300"
+        <div id="ongoingChallenges">
+            <v-card
+              class="mx-auto"
               width="250"
-              
-            > 
-            <template v-slot="{ item }">
-              <v-list-item>
+            >
+              <v-card-title class="white--text black">
+                Ongoing Challenges
 
-                <v-list-item-content>
-                  <v-list-item-title>{{ item.player }}</v-list-item-title>
-                  
-                </v-list-item-content>
+                <v-spacer></v-spacer>
+              </v-card-title>
 
-                <v-list-item-action>
-                  <v-btn
-                    depressed
-                    small
-                    @click.stop="openChallengeModal(item)"
-                  >
-                    View
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </template>
+              <v-virtual-scroll
+                :items="ongoingChallenges"
+                :item-height="50"
+                height="300"
+                width="250"
+                
+              > 
+              <template v-slot="{ item }">
+                <v-list-item>
 
-            </v-virtual-scroll>
-          </v-card>
-      </div>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    
+                  </v-list-item-content>
+
+                  <v-list-item-action>
+                    <v-btn
+                      depressed
+                      small
+                      @click.stop="openChallengeModal(item)"
+                    >
+                      View
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+
+              </v-virtual-scroll>
+            </v-card>
+        </div>
+
+        <div id="completedChallenges">
+            <v-card
+              class="mx-auto"
+              width="250"
+            >
+              <v-card-title class="white--text black">
+                Completed Challenges
+
+                <v-spacer></v-spacer>
+              </v-card-title>
+
+              <v-virtual-scroll
+                :items="completedChallenges"
+                :item-height="50"
+                height="300"
+                width="250"
+                
+              > 
+              <template v-slot="{ item }">
+                <v-list-item>
+
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    
+                  </v-list-item-content>
+
+
+                </v-list-item>
+              </template>
+
+              </v-virtual-scroll>
+            </v-card>
+          </div>
+
+        </div>
 
       <v-dialog
             v-model="isChallengeModalOpen"
@@ -111,7 +148,7 @@
                 <div id="icons">
                     <v-tooltip bottom v-for="(subject, i) in subjects" v-bind:key="i">
                       <template v-slot:activator="{ on, attrs }">
-                        <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[i], notActive: !modalInfo.categories[i] }">{{ subject.icon }}</v-icon>
+                        <v-icon v-bind="attrs" hover="false" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[i], notActive: !modalInfo.categories[i] }">{{ subject.icon }}</v-icon>
                       </template>
                       <span>{{ subject.name }}</span>
                     </v-tooltip>
@@ -217,6 +254,15 @@ export default {
         { player: "12345", categories: [false, false, true, false, false, true] },
       ],
 
+      completedChallenges: [
+        { player: "awge34yew" },
+        { player: "wgh5her" },
+        { player: "srhd5ysrd" },
+        { player: "rhx5h4eh" },
+        { player: "zhdrh54hwh"},
+        { player: "12ger345" },
+      ],
+
       subjects: [
         { name: "Biology", icon: mdiDna},
         { name: "Chemistry", icon: mdiFlask},
@@ -284,7 +330,6 @@ export default {
 }
 
 #challenges {
-  margin: 35px auto;
   text-align: left;
 }
 
@@ -308,5 +353,10 @@ export default {
 
 v-tooltip {
   cursor: normal;
+}
+
+#scrollers {
+  margin: 0 auto;
+  flex-direction: row;
 }
 </style>
