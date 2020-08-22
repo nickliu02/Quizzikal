@@ -1,6 +1,6 @@
 <template>
   <v-app>
-      <div id="wrapper">
+
         <h1 id="title">Quizzikal</h1>
 
         <div id="buttons">
@@ -16,126 +16,138 @@
 
 
         <div id="scrollers">
-          <div id="challenges">
-            <v-card
-              class="mx-auto"
-              width="250"
-            >
-              <v-card-title class="white--text black">
-                Incoming Challenges
+          <ul>
+            <li>
+              <div id="challenges">
+                <v-card
+                  class="mx-auto"
+                  width="250"
+                >
+                  <v-card-title class="white--text black">
+                    Incoming Challenges
 
-                <v-spacer></v-spacer>
-              </v-card-title>
+                    <v-spacer></v-spacer>
+                  </v-card-title>
 
-              <v-virtual-scroll
-                :items="challenges"
-                :item-height="50"
-                height="300"
-                width="250"
-                
-              > 
-              <template v-slot="{ item }">
-                <v-list-item>
-
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                  <v-virtual-scroll
+                    :items="challenges"
+                    :item-height="50"
+                    height="300"
+                    width="250"
                     
-                  </v-list-item-content>
+                  > 
+                  <template v-slot="{ item }">
+                    <v-list-item>
 
-                  <v-list-item-action>
-                    <v-btn
-                      depressed
-                      small
-                      @click.stop="openChallengeModal(item)"
-                    >
-                      View
-                    </v-btn>
-                  </v-list-item-action>
-                </v-list-item>
-              </template>
+                      <v-list-item-content>
+                        <v-list-item-title>{{ item.player }}</v-list-item-title>
+                        
+                      </v-list-item-content>
 
-              </v-virtual-scroll>
-            </v-card>
-          </div>
-        </div>
+                      <v-list-item-action>
+                        <v-btn
+                          depressed
+                          small
+                          @click.stop="openChallengeModal(item)"
+                        >
+                          View
+                        </v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </template>
 
-        <div id="ongoingChallenges">
-            <v-card
-              class="mx-auto"
-              width="250"
-            >
-              <v-card-title class="white--text black">
-                Ongoing Challenges
+                  </v-virtual-scroll>
+                </v-card>
+              </div>
+            </li>
 
-                <v-spacer></v-spacer>
-              </v-card-title>
+            <li>
+              <div id="ongoingChallenges">
+                  <v-card
+                    class="mx-auto"
+                    width="250"
+                  >
+                    <v-card-title class="white--text black">
+                      Ongoing Challenges
 
-              <v-virtual-scroll
-                :items="ongoingChallenges"
-                :item-height="50"
-                height="300"
-                width="250"
-                
-              > 
-              <template v-slot="{ item }">
-                <v-list-item>
+                      <v-spacer></v-spacer>
+                    </v-card-title>
 
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.player }}</v-list-item-title>
+                    <v-virtual-scroll
+                      :items="ongoingChallenges"
+                      :item-height="50"
+                      height="300"
+                      width="250"
+                      
+                    > 
+                    <template v-slot="{ item }">
+                      <v-list-item>
+
+                        <v-list-item-content>
+                          <v-list-item-title>{{ item.player + ` ${item.numAnswered}/6` }}</v-list-item-title>
+                          
+                        </v-list-item-content>
+
+                        <v-list-item-action>
+                          <v-btn
+                            depressed
+                            small
+                            @click.stop="openOngoingChallengeModal(item)"
+                          >
+                            Continue  
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </template>
+
+                    </v-virtual-scroll>
+                  </v-card>
+              </div>
+            </li>
+
+            <li>
+              <div id="completedChallenges">
+                <v-card
+                  class="mx-auto"
+                  width="250"
+                >
+                  <v-card-title class="white--text black">
+                    Completed Challenges
+
+                    <v-spacer></v-spacer>
+                  </v-card-title>
+
+                  <v-virtual-scroll
+                    :items="completedChallenges"
+                    :item-height="50"
+                    height="300"
+                    width="250"
                     
-                  </v-list-item-content>
+                  > 
+                  <template v-slot="{ item }">
+                    <v-list-item>
 
-                  <v-list-item-action>
-                    <v-btn
-                      depressed
-                      small
-                      @click.stop="openChallengeModal(item)"
-                    >
-                      View
-                    </v-btn>
-                  </v-list-item-action>
-                </v-list-item>
-              </template>
+                      <v-list-item-content v-bind:class="{
+                          green: item.pc > item.oc,
+                          yellow: item.pc === item.oc,
+                          red: item.pc < item.oc
+                        }">
+                        <v-list-item-title>{{ `(${item.pc}/6) vs ${item.player} (${item.oc}/6)` }}</v-list-item-title>
+                        
+                      </v-list-item-content>
 
-              </v-virtual-scroll>
-            </v-card>
-        </div>
 
-        <div id="completedChallenges">
-            <v-card
-              class="mx-auto"
-              width="250"
-            >
-              <v-card-title class="white--text black">
-                Completed Challenges
+                    </v-list-item>
+                  </template>
 
-                <v-spacer></v-spacer>
-              </v-card-title>
-
-              <v-virtual-scroll
-                :items="completedChallenges"
-                :item-height="50"
-                height="300"
-                width="250"
+                  </v-virtual-scroll>
+                </v-card>
                 
-              > 
-              <template v-slot="{ item }">
-                <v-list-item>
-
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.player }}</v-list-item-title>
-                    
-                  </v-list-item-content>
-
-
-                </v-list-item>
-              </template>
-
-              </v-virtual-scroll>
-            </v-card>
-          </div>
-
+              </div>
+            </li>
+          </ul>
         </div>
+        
 
       <v-dialog
             v-model="isChallengeModalOpen"
@@ -148,7 +160,7 @@
                 <div id="icons">
                     <v-tooltip bottom v-for="(subject, i) in subjects" v-bind:key="i">
                       <template v-slot:activator="{ on, attrs }">
-                        <v-icon v-bind="attrs" hover="false" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[i], notActive: !modalInfo.categories[i] }">{{ subject.icon }}</v-icon>
+                        <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[i], notActive: !modalInfo.categories[i] }">{{ subject.icon }}</v-icon>
                       </template>
                       <span>{{ subject.name }}</span>
                     </v-tooltip>
@@ -198,6 +210,7 @@
                       <v-icon v-bind="attrs" v-on="on" 
                         x-large v-bind:class="{ active: selectedSubjects[i], notActive: !selectedSubjects[i] }"
                         v-on:click="selectedSubjects[i] = !selectedSubjects[i]"
+
                       >{{ subject.icon }}</v-icon>
                   </template>
                   <span>{{ subject.name }}</span>
@@ -226,6 +239,36 @@
           </v-card>
 
         </v-dialog>
+
+        <v-dialog
+          v-model="isOngoingChallengeModalOpen"
+          max-width="350"
+        >
+
+          <v-card id="modal">
+            <v-card-title class="headline justify-center">Continue Challenge ({{ongoingModalInfo.numAnswered}}/6)
+            </v-card-title>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="red darken-1"
+                text
+                @click="isOngoingChallengeModalOpen = false"
+              >
+                  Cancel
+              </v-btn>
+
+              <v-btn
+                color="green darken-1"
+                text
+                @click="isOngoingChallengeModalOpen = false"
+              >
+                  Continue
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
   </v-app>    
 </template>
 
@@ -246,21 +289,23 @@ export default {
       ],
 
       ongoingChallenges: [
-        { player: "awgeew", categories: [true, false, true, false, false, false] },
-        { player: "wgher", categories: [false, false, true, false, false, true] },
-        { player: "srhdsrd", categories: [true, false, true, false, false, false] },
-        { player: "rhxeh", categories: [false, false, true, false, false, true] },
-        { player: "zhdrhwh", categories: [true, false, true, false, false, false] },
-        { player: "12345", categories: [false, false, true, false, false, true] },
+        { player: "awgeew", numAnswered: "5" },
+        { player: "wgher", numAnswered: "2" },
+        { player: "srhdsrd", numAnswered: "1" },
+        { player: "rhxeh", numAnswered: "4" },
+        { player: "zhdrhwh", numAnswered: "3" },
+        { player: "12345", numAnswered: "3" },
       ],
 
       completedChallenges: [
-        { player: "awge34yew" },
-        { player: "wgh5her" },
-        { player: "srhd5ysrd" },
-        { player: "rhx5h4eh" },
-        { player: "zhdrh54hwh"},
-        { player: "12ger345" },
+        { player: "6558", pc: "3", oc: "2" },
+        { player: "wgrher", pc: "5", oc: "2" },
+        { player: "sr5ysrd", pc: "3", oc: "6" },
+        { player: "rhx567h4eh", pc: "2", oc: "2" },
+        { player: "z854hwh", pc: "3", oc: "2" },
+        { player: "12g645", pc: "3", oc: "2" },
+        { player: "z854hwh", pc: "3", oc: "2" },
+        { player: "12g645", pc: "3", oc: "2" },
       ],
 
       subjects: [
@@ -276,7 +321,7 @@ export default {
       modalInfo: { player: "", categories: [] },
 
       isOngoingChallengeModalOpen: false,
-      modalInfo: { player: "", categories: [] },
+      ongoingModalInfo: { player: "", categories: [] },
 
       isNewChallengeModalOpen: false,
       selectedSubjects: [false, false, false, false, false],
@@ -329,8 +374,13 @@ export default {
   margin: 10px 0;
 }
 
-#challenges {
+#challenges, #ongoingChallenges, #completedChallenges {
   text-align: left;
+  margin: 20px;
+}
+
+#challenges {
+  margin-left: 0
 }
 
 #icons {
@@ -356,7 +406,32 @@ v-tooltip {
 }
 
 #scrollers {
+  text-align: center;
   margin: 0 auto;
-  flex-direction: row;
+  float: left;
 }
+
+#scrollers ul {
+  list-style-type: none;
+}
+
+#scrollers li {
+  float: left;
+}
+
+.green {
+  background-color: springgreen;
+  text-align: center;
+}
+
+.red {
+  background-color: lightcoral;
+  text-align: center;
+}
+
+.yellow {
+  background-color: lightyellow;
+  text-align: center;
+}
+
 </style>
