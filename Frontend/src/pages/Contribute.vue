@@ -1,6 +1,9 @@
 <template>
   <v-app>
+    <div id="ligma">
       <h1>Contribute</h1>
+    </div>
+      
   </v-app>
 </template>
 
@@ -10,6 +13,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  #ligma {
+    background-color: red;
+    height:1000000px;
+  }
 </style>
