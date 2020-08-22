@@ -2,6 +2,11 @@ const router = require('express').Router();
 const checkAuth = require('./middleware/check-auth');
 const pool = require('../models/database');
 // You can require and use your routes here ;)
+router.get('/',(req,res)=>{
+    res.send("sthwe");
+
+
+});
 router.post('/login',(req,res) =>{
     //Check if code is right
     var passcode = req.body.passcode;
@@ -20,18 +25,18 @@ router.post('/login',(req,res) =>{
             {
                 expiresIn:"1h"
             });
-        response.status(201).json({accessToken:token});
+        res.status(201).json({accessToken:token});
 
     })
 
 });
 router.post('/register',(req,res) =>{
-    const { name, email, password } = req.body
+    const { name, email, password } = req.body;
     pool.query('INSERT INTO users (name,password) VALUES ($1, $2)', [name, password], (error, results) => {
         if (error) {
-            throw error
+            throw error;
         }
-        response.status(201).send(`User added with ID: ${result.insertId}`)
+        res.status(201).send(`User added with ID: ${result.insertId}`)
     })
 
 });
@@ -41,7 +46,7 @@ router.get('/profile',checkAuth,(req,res) =>{
         if (error) {
             throw error
         }
-        response.status(200).json(results.rows);
+        res.status(200).json(results.rows);
     });
 });
 router.get('/questions',checkAuth,(req,res) =>{
@@ -50,7 +55,7 @@ router.get('/questions',checkAuth,(req,res) =>{
         if (error) {
             throw error
         }
-        response.status(201).json(results.rows);
+        res.status(201).json(results.rows);
 
     });
 
