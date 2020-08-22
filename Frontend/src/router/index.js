@@ -11,7 +11,9 @@ Vue.use(Router);
 
 let router = new Router({
   routes: [
-    {path: "/", name:"Home",component: Home},
+    {path: "/", name:"Home",component: Home, meta:{
+      auth:true
+    }},
     {path: "/login", name: "Login", component: Login,meta:{
       guest: true
     }},
@@ -34,9 +36,10 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.auth)){
     if (localStorage.getItem('jwt') == null){
+      console.log(to.fullPath)
+      localStorage.setItem('nextUrl',to.fullPath)
       next({
         path: '/login',
-        params: { nextUrl: to.fullPath}
       })
     }
     else{

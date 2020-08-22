@@ -71,6 +71,17 @@ export default {
         onLogin(e){
             e.preventDefault()
             localStorage.setItem('jwt',"placeholder token")
+            if (localStorage.getItem('jwt') !=null){
+                console.log(this.$route.params)
+                if(localStorage.getItem('nextUrl')!= null){
+                    this.$router.push(localStorage.getItem('nextUrl'))
+                    
+                }
+                else{
+                    this.$router.push('Home')
+                }
+            }
+            
         }
     }
 }
