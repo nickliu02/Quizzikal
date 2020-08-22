@@ -4,6 +4,7 @@
       <ul>
         <li><h1 id="title">Temp name</h1></li>
         <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/quiz">Quiz</router-link></li>
         <li id="login"><router-link to="/login">Login</router-link></li>
         <li id="register"><router-link to="/register">Register</router-link></li>
 

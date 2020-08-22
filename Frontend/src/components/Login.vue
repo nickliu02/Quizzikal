@@ -1,10 +1,9 @@
 <template>
     <div id="page">
 
-        <div id="wrapper" v-if="!this.$parent.loggedIn">
+        <div id="wrapper">
             <div id="form">
                 <form>
-                    <div v-if="error" class = "error">{{ error.message }}</div>
 
                     <h1>Login</h1>
 
@@ -20,11 +19,6 @@
                 <div id="link">Need an account? Click here to <router-link to="/register">sign up.</router-link></div>
             </div>
             
-        </div>
-
-
-        <div id="loggedIn" v-if="this.$parent.loggedIn">
-            <h1>You are now logged in.</h1>
         </div>
         
     </div>
