@@ -6,28 +6,12 @@ const {
     DB_PASSWORD
 } = process.env;
 
-
-
-const Sequelize = require('sequelize');
-
-const db = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
+const Pool = require('pg').Pool
+const pool = new Pool({
+    user: DB_USER,
     host: DB_HOST,
-    pool: {
-        max: 10,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-    },
-    dialect: postgres,
-    dialectOptions: {
-        options: {
-            useUTC: false,
-            dateFirst: 1,
-        }
-    },
-    define: {
-        timestamps: false
-    }
+    database: DB_DATABASE,
+    password: DB_PASSWORD,
+    port: 5432,
 });
-
-module.exports = db;
+module.exports=pool;

@@ -1,5 +1,3 @@
-
-
 // Patches
 const {inject, errorHandler} = require('express-custom-error');
 inject(); // Patch express in order to use async / await syntax
@@ -64,7 +62,6 @@ app.use('*', (req, res) => {
     .status(404)
     .json( {status: false, message: 'Endpoint Not Found'} );
 })
-
 // Open Server on selected Port
 app.listen(
     PORT,
