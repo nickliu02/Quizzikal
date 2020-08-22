@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import { colors } from 'vuetify/lib';
+import { mdiPlay, mdiPencilBoxMultiple, mdiAccountCircle,
+     mdiLogoutVariant, mdiLoginVariant } from '@mdi/js';
 
 Vue.use(Vuetify);
 
@@ -13,5 +15,9 @@ export default new Vuetify({
                 accent: colors.indigo.base,
             }
         }
+    },
+
+    icons: {
+        
     }
 });

@@ -1,60 +1,69 @@
 <template>
   <v-app>
-    <v-app-bar
+    <v-navigation-drawer 
+      permanent
       app
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            Temp Name
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            subtext
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+      <v-list
+        dense
+        nav
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+    </v-navigation-drawer>
+
 
     <v-main>
-      <HelloWorld/>
+      
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import { mdiPlay, mdiPencilBoxMultiple, mdiAccountCircle,
+     mdiLogoutVariant, mdiLoginVariant } from '@mdi/js';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+   
   },
 
   data: () => ({
-    //
+    items: [
+      { title: "Play", icon: mdiPlay },
+      { title: "Contribute", icon: mdiPencilBoxMultiple },
+      { title: "Profile", icon: mdiAccountCircle },
+      { title: "Logout", icon: mdiLogoutVariant }
+    ]
   }),
 };
 </script>
