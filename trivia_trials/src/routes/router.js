@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('./middleware/check-auth');
 const pool = require('../models/database');
 // You can require and use your routes here ;)
 router.post('/login',(req,res) =>{
