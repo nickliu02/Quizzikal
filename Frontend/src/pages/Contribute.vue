@@ -14,8 +14,5 @@ export default {
 </script>
 
 <style scoped>
-  #ligma {
-    background-color: red;
-    height:1000000px;
-  }
+  
 </style>
