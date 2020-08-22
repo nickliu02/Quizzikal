@@ -5,7 +5,7 @@
 
         <div id="buttons">
           <div>
-            <v-btn depressed x-large color="accent">New Challenge</v-btn>
+            <v-btn depressed x-large color="accent" @click.stop="isNewChallengeModalOpen = true">New Challenge</v-btn>
           </div>
 
           <div>
@@ -18,7 +18,7 @@
         <div id="challenges">
           <v-card
             class="mx-auto"
-            width="200"
+            width="250"
           >
             <v-card-title class="white--text black">
               Challenges
@@ -30,7 +30,7 @@
               :items="challenges"
               :item-height="50"
               height="300"
-              width="200"
+              width="250"
               
             > 
 
@@ -46,7 +46,7 @@
                   <v-btn
                     depressed
                     small
-                    @click.stop="openModal(item)"
+                    @click.stop="openChallengeModal(item)"
                   >
                     View
                   </v-btn>
@@ -58,23 +58,66 @@
           </v-card>
 
           <v-dialog
-            v-model="isModalOpen"
+            v-model="isChallengeModalOpen"
             max-width="350"
           >
-    
+
             <v-card id="modal">
-              <v-card-title class="headline justify-center">Challenge from {{ modalInfo.player }}</v-card-title>
-              
-              <v-card-text class="text-center">
-                Categories: {{ printCategories(modalInfo.categories) }}
-              </v-card-text>
+              <v-card-title class="headline justify-center">Challenge from {{ modalInfo.player }}
+
+                <div id="icons">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[0], notActive: !modalInfo.categories[0] }">{{ mdiDna }}</v-icon>
+                    </template>
+                    <span>Biology</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[1], notActive: !modalInfo.categories[1] }">{{ mdiFlask }}</v-icon>
+                    </template>
+                    <span>Chemistry</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[2], notActive: !modalInfo.categories[2] }">{{ mdiAtom }}</v-icon>
+                    </template>
+                    <span>Physics</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[3], notActive: !modalInfo.categories[3] }">{{ mdiMathIntegralBox }}</v-icon>
+                    </template>
+                    <span>Math</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[4], notActive: !modalInfo.categories[4] }">{{ mdiBookOpenBlankVariant }}</v-icon>
+                    </template>
+                    <span>English</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[5], notActive: !modalInfo.categories[5] }">{{ mdiPillar }}</v-icon>
+                    </template>
+                    <span>History</span>
+                  </v-tooltip>
+
+                
+                </div>
+              </v-card-title>
 
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
                   color="red darken-1"
                   text
-                  @click="isModalOpen = false"
+                  @click="isChallengeModalOpen = false"
                 >
                     Decline
                 </v-btn>
@@ -82,14 +125,90 @@
                 <v-btn
                   color="green darken-1"
                   text
-                  @click="isModalOpen = false"
+                  @click="isChallengeModalOpen = false"
                 >
                     Accept
                 </v-btn>
               </v-card-actions>
             </v-card>
+          </v-dialog>
 
-             
+          <v-dialog
+            v-model="isNewChallengeModalOpen"
+            max-width="350"
+          >
+
+            <v-card id="modal">
+              <v-card-title class="headline justify-center">New Challenge
+                
+
+                <div id="icons">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[0], notActive: !modalInfo.categories[0] }">{{ mdiDna }}</v-icon>
+                    </template>
+                    <span>Biology</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[1], notActive: !modalInfo.categories[1] }">{{ mdiFlask }}</v-icon>
+                    </template>
+                    <span>Chemistry</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[2], notActive: !modalInfo.categories[2] }">{{ mdiAtom }}</v-icon>
+                    </template>
+                    <span>Physics</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[3], notActive: !modalInfo.categories[3] }">{{ mdiMathIntegralBox }}</v-icon>
+                    </template>
+                    <span>Math</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[4], notActive: !modalInfo.categories[4] }">{{ mdiBookOpenBlankVariant }}</v-icon>
+                    </template>
+                    <span>English</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[5], notActive: !modalInfo.categories[5] }">{{ mdiPillar }}</v-icon>
+                    </template>
+                    <span>History</span>
+                  </v-tooltip>
+
+                
+                </div>
+              </v-card-title>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="red darken-1"
+                  text
+                  @click="isNewChallengeModalOpen = false"
+                >
+                    Cancel
+                </v-btn>
+
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="isNewChallengeModalOpen = false"
+                >
+                    Send!
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+
           </v-dialog>
 
         </div>
@@ -103,18 +222,26 @@ import { mdiDna, mdiFlask, mdiMathIntegralBox, mdiBookOpenBlankVariant, mdiAtom,
 export default {
   data() {
     return {
+      mdiDna: mdiDna,
+      mdiFlask: mdiFlask,
+      mdiMathIntegralBox: mdiMathIntegralBox,
+      mdiBookOpenBlankVariant: mdiBookOpenBlankVariant,
+      mdiAtom: mdiAtom,
+      mdiPillar: mdiPillar,
+      // categories: [Biology, Chemistry, Physics, Math, English, History]
       challenges: [
-        { player: "lolxd", categories: ["Biology", "Physics"] },
-        { player: "ayylmao", categories: ["History", "Math"] },
-        { player: "lolxd", categories: ["Biology", "Physics"] },
-        { player: "ayylmao", categories: ["History", "Math"] },
-        { player: "lolxd", categories: ["Biology", "Physics"] },
-        { player: "lolxd", categories: ["Biology", "Physics"] },
-        { player: "ayylmao", categories: ["History", "Math"] },
+        { player: "lolxd", categories: [true, false, true, false, false, false] },
+        { player: "ayylmao", categories: [false, false, true, false, false, true] },
+        { player: "lolxd", categories: [true, false, true, false, false, false] },
+        { player: "ayylmao", categories: [false, false, true, false, false, true] },
+        { player: "lolxd", categories: [true, false, true, false, false, false] },
+        { player: "ayylmao", categories: [false, false, true, false, false, true] },
       ],
 
-      isModalOpen: false,
+      isChallengeModalOpen: false,
       modalInfo: { player: "", categories: [] },
+
+      isNewChallengeModalOpen: false,
     }
   },
 
@@ -127,10 +254,10 @@ export default {
       return out.substring(0, out.length-2);
     },
 
-    openModal(info) {
-      this.isModalOpen = true;
+    openChallengeModal(info) {
+      this.isChallengeModalOpen = true;
       this.modalInfo = info;
-    }
+    },
   }
 }
 </script>
@@ -152,7 +279,7 @@ export default {
 }
 
 #buttons .v-btn {
-  width: 200px;
+  width: 250px;
   margin: 10px 0;
 }
 
@@ -160,5 +287,17 @@ export default {
   margin: 35px auto;
 }
 
+#icons {
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.notActive {
+  color: #ccc
+}
+
+.active {
+  color: black
+}
 
 </style>
