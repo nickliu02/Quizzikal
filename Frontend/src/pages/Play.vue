@@ -5,7 +5,7 @@
 
         <div id="buttons">
           <div>
-            <v-btn depressed x-large color="accent">New Challenge</v-btn>
+            <v-btn depressed x-large color="accent" @click.stop="isNewChallengeModalOpen = true">New Challenge</v-btn>
           </div>
 
           <div>
@@ -108,14 +108,9 @@
                     <span>History</span>
                   </v-tooltip>
 
-                  
-
-                  
-          
+                
                 </div>
               </v-card-title>
-
-              
 
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -136,8 +131,84 @@
                 </v-btn>
               </v-card-actions>
             </v-card>
+          </v-dialog>
 
-             
+          <v-dialog
+            v-model="isNewChallengeModalOpen"
+            max-width="350"
+          >
+
+            <v-card id="modal">
+              <v-card-title class="headline justify-center">New Challenge
+                
+
+                <div id="icons">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[0], notActive: !modalInfo.categories[0] }">{{ mdiDna }}</v-icon>
+                    </template>
+                    <span>Biology</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[1], notActive: !modalInfo.categories[1] }">{{ mdiFlask }}</v-icon>
+                    </template>
+                    <span>Chemistry</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[2], notActive: !modalInfo.categories[2] }">{{ mdiAtom }}</v-icon>
+                    </template>
+                    <span>Physics</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[3], notActive: !modalInfo.categories[3] }">{{ mdiMathIntegralBox }}</v-icon>
+                    </template>
+                    <span>Math</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[4], notActive: !modalInfo.categories[4] }">{{ mdiBookOpenBlankVariant }}</v-icon>
+                    </template>
+                    <span>English</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on" x-large v-bind:class="{ active: modalInfo.categories[5], notActive: !modalInfo.categories[5] }">{{ mdiPillar }}</v-icon>
+                    </template>
+                    <span>History</span>
+                  </v-tooltip>
+
+                
+                </div>
+              </v-card-title>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="red darken-1"
+                  text
+                  @click="isNewChallengeModalOpen = false"
+                >
+                    Cancel
+                </v-btn>
+
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="isNewChallengeModalOpen = false"
+                >
+                    Send!
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+
           </v-dialog>
 
         </div>
@@ -169,6 +240,8 @@ export default {
 
       isChallengeModalOpen: false,
       modalInfo: { player: "", categories: [] },
+
+      isNewChallengeModalOpen: false,
     }
   },
 
@@ -184,7 +257,7 @@ export default {
     openChallengeModal(info) {
       this.isChallengeModalOpen = true;
       this.modalInfo = info;
-    }
+    },
   }
 }
 </script>
