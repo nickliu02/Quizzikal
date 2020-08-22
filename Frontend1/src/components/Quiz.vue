@@ -68,7 +68,18 @@ export default {
 }
 
 #answer_wrapper ul {
-    
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    background-color: #333333;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+#answer_wrapper li {
+  float: left;
+  
 }
 
 .answer_button {

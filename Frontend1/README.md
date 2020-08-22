@@ -1,4 +1,4 @@
-# ignitionhacks
+# ignitonhacks
 
 ## Project setup
 ```
