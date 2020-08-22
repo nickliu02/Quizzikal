@@ -69,7 +69,8 @@ export default {
       { title: "Contribute", icon: mdiPencilBoxMultiple, route: "/contribute" },
       { title: "Profile", icon: mdiAccountCircle, route: "/profile" },
       { title: "Logout", icon: mdiLogoutVariant }
-    ]
+    ],
+    
   }),
 };
 </script>
