@@ -10,9 +10,9 @@
         <v-list-item two-line>
             <v-list-item-content>
                 <v-list-item-title class="title">
-                    <v-list-item-avatar>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Q_magazine_logo.svg">
-            </v-list-item-avatar> Quizzikal
+                    
+              <!--<img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Q_magazine_logo.svg">-->
+             Quizzikal
                 </v-list-item-title>
             </v-list-item-content>
         </v-list-item>
