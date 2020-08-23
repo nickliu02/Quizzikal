@@ -398,13 +398,12 @@ export default {
     },
 
     async getChallenges() {
-      console.log("hiiiiiiiii")
       const profile = this.$axios.get(this.$API_URL+"/user/profile/", {
-        headers: {'x-access-token': localStorage.getItem('jwt') },
-        body: {
+        headers: {'x-access-token': localStorage.getItem('jwt') }},
+        {
           username: localStorage.getItem("username"),
         }
-      }).then((profile) => {
+      ).then((profile) => {
         this.challenges = profile.data.incoming_matches,
         this.ongoingChallenges = profile.data.pending_matches,
         this.completedChallenges = profile.data.past_matches
@@ -420,15 +419,19 @@ export default {
           categories.push(this.subjectIndex[i]);
         }
       }
-      
-      this.$axios.post(this.$API_URL+"/quiz/create/", {
-        headers:  {'x-access-token': localStorage.getItem('jwt') },
-        body: {
-          challenger_username: "poo",
-          challengee_username: "feces",
-          categories: categories
+
+      console.log(categories);
+      this.$axios.post(this.$API_URL+"/quiz/create/",
+        {
+          challenger_username: localStorage.getItem("username"),
+          challengee_username: opponentUsername,
+          catagories: categories
+          
+        },
+        {
+        headers:  {'x-access-token': localStorage.getItem('jwt') }
         }
-      }).then((id) => {
+      ).then((id) => {
         console.log(id);
         this.getChallenges();
       }).catch((error) => {

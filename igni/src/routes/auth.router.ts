@@ -9,9 +9,9 @@ authRouter.post('/register', (req,res) => {
 
     //check that username isnt already registered
 
+    const token = register_user(username, password);
 
-    const result = register_user(username, password);
-    res.send('success');
+    res.send({accessToken: token});
 
 });
 
@@ -21,5 +21,5 @@ authRouter.post('/login', (req,res) => {
 
     const token = authenticate_user(username, password);
 
-    res.status(201).json({accessToken:token});
+    res.send({accessToken: token});
 });
