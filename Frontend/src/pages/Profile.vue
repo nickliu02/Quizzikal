@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-card
-      :loading="loading"
+      
       class="mx-auto my-12"
       max-width="1000"
     >
@@ -14,7 +14,6 @@
 
       <v-card-text>
         Name: {{profile.name}}
-
       </v-card-text>
 
       <v-divider class="mx-4"></v-divider>
@@ -28,19 +27,21 @@
           
         </v-col>
         <v-col>
-          <v-progress-circular :value="60" size="100" width="20">60%</v-progress-circular>
+          <v-progress-circular :value="profile.won/(profile.won+profile.lost)*100" size="100" width="20">{{ `${Math.floor(this.profile.won/(this.profile.won+this.profile.lost)*100)}%`}}</v-progress-circular>
         </v-col>
 
       </v-row>
       
       <v-card-text>
-        Win/Loss
+        <p class="text--primary">Win/Loss</p>
+        
       </v-card-text>
       <v-progress-linear
-      background-color="green"
-      color="red"
-      value="30"
-    ></v-progress-linear>
+      background-color="red"
+      color="green"
+      height="40"
+      :value="profile.won"
+    ><strong class="white--text">{{profile.won}}/{{profile.lost}}</strong></v-progress-linear>
 
       
     </v-card>
@@ -54,7 +55,30 @@ export default {
     data(){
         return {
             profile: {
-                username : "fairnightzz",
+              
+                
+            },
+            
+            registerR : "/register"
+        }
+    },
+    mounted: function(){
+      console.log("lmao")
+      // this.$axios.post(this.$API_URL+"/profile", {
+      //   headers: {
+      //     'x-access-token': localStorage.getItem('jwt')
+      //   },
+      //   body: {
+      //     username: localStorage.getItem('username')
+      //   }
+      //   })
+      //   .then(response => {
+      //       this.profile=response.data;
+      //       console.log(this.profile)
+      //   })
+
+      this.profile = {
+        username : "fairnightzz",
                 name : "Zhehai",
                 winrate: 0.69,
                 won:69,
@@ -67,15 +91,9 @@ export default {
                   { player: "z854hwh", pc: "3", oc: "2" },
                   { player: "12g645", pc: "3", oc: "2" },
                   { player: "z854hwh", pc: "3", oc: "2" },
-                  { player: "12g645", pc: "3", oc: "2" }]
-      
-                  
-                
-            },
-            
-            registerR : "/register"
-        }
-    },
+                  { player: "12g645", pc: "3", oc: "2" }] 
+      }
+    }
 }
 </script>
 
