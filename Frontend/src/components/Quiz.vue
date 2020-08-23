@@ -129,19 +129,19 @@ export default {
     },
 
     methods: {
-        async getQuestion() {
+        getQuestion() {
             console.log("requesting questions")
-            this.$axios.get(this.$API_URL+"/quiz/next",
+            console.log(localStorage.getItem('jwt'))
+            this.$axios.post(this.$API_URL+"/quiz/next",
                 {
                     headers: {'x-access-token': localStorage.getItem('jwt') }
 
                 },
 
                 {
-                    body: {
-                        username: localStorage.getItem('username'),
-                        id: '26',
-                    }    
+                    username: localStorage.getItem('username'),
+                    id: '26'
+                      
                 },
 
                 
