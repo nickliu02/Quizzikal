@@ -1,4 +1,4 @@
-import { client } from 'services/database.service';
+import { client } from './database.service';
 
 export const register_user = (username: string, password: string) => client.query(
     'INSERT INTO users(username, password) VALUES($1, $2)',

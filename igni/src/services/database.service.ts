@@ -1,5 +1,5 @@
 import { Client } from 'pg';
-import { connectionString } from 'config';
+import { connectionString } from '../config';
 
 export const client = new Client({
     connectionString
