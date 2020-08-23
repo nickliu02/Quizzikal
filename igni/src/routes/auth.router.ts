@@ -19,6 +19,7 @@ authRouter.post('/login', (req,res) => {
 
     const { username, password } = req.body;
 
-    const result = authenticate_user(username, password);
-    res.send(result);
+    const token = authenticate_user(username, password);
+
+    res.status(201).json({accessToken:token});
 });

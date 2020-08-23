@@ -2,10 +2,11 @@ import express from 'express';
 import { create_quiz, get_quiz } from '../services/quiz.service';
 import { get_questions_of_catagory, get_question } from '../services/question.service';
 import { Catagory } from '../types/catagories';
+import {check_auth} from "./middleware/check-auth";
 
 export const quizRouter = express.Router();
 
-quizRouter.post('/create', async (req,res) => {
+quizRouter.post('/create',check_auth, async (req,res) => {
 
     const body: { challenger_username: string, challengee_username: string, catagories: Catagory[] } = req.body;
 
@@ -23,7 +24,7 @@ quizRouter.post('/create', async (req,res) => {
 
 });
 
-quizRouter.get('/next', async (req,res) => {
+quizRouter.get('/next', check_auth,async (req,res) => {
 
     const body: { username: string, quiz_id: number } = req.body;
 
@@ -40,7 +41,7 @@ quizRouter.get('/next', async (req,res) => {
         res.send('You are not in this quiz');
         return;
     }
-    
+
     console.log(results);
 
     //map to corresponding quiz_id
@@ -53,7 +54,7 @@ quizRouter.get('/next', async (req,res) => {
 
 });
 
-quizRouter.post('/submit', (req,res) => {
+quizRouter.post('/submit',check_auth, (req,res) => {
 
     const { username, quiz_id, answer } = req.body;
 
