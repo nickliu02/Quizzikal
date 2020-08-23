@@ -58,15 +58,12 @@ quizRouter.get('/next', check_auth,async (req,res) => {
 
 });
 
-<<<<<<< HEAD
+
 quizRouter.post('/submit', async (req,res) => {
 
     const body: { username: string, quiz_id: number, answer: string } = req.body;
 
     //make sure player is in quiz and there are still questions to do
-=======
-quizRouter.post('/submit',check_auth, (req,res) => {
->>>>>>> 0d4201634f6a32271c154c598bf38a935e231d27
 
     const quiz = await get_quiz(body.quiz_id);
 
