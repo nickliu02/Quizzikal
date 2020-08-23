@@ -7,6 +7,8 @@
                     <h1 style="font-weight: normal">{{ `Question ${numQuestion} of 6` }}</h1>
                 </v-card-text>
 
+                <v-icon id="icon">{{ icons[category] }}</v-icon>
+
             </v-card>
          </div>
 
@@ -94,6 +96,17 @@ export default {
 
 h1, h3 {
     color: white
+}
+
+#icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 14px;
+    color: white;
+    width: 50px;
+    
+    
 }
 
 </style>
