@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div id="header">
-            <v-card width="700" class="mx-auto" v-bind:color="colors[category]"> 
+            <v-card width="700" class="mx-auto"> 
                 
                 <v-card-text class="font-weight-normal">    
                     <h1 style="font-weight: normal">{{ `Question ${numQuestion} of 6` }}</h1>
@@ -12,7 +12,7 @@
             </v-card>
          </div>
 
-        <div>
+        <div id="quiz" v-if="ongoing">
             <v-card width="700" class="mx-auto" v-bind:color="colors[category]"> 
                 <div id="question">
                     <v-card-text class="font-weight-bold">
@@ -24,8 +24,10 @@
                 <v-card-actions>
                     <div id="card">
                         <ul>
-                            <li v-for="choice in choices" v-bind:key="choice">
-                                <v-btn width="320" height="100">
+                            <li v-for="(choice, i) in choices" v-bind:key="i"
+                                @click="selectOption(choice)"
+                            >
+                                <v-btn width="320" height="100" v-bind:color="btnColors[getColor(choice)]">
                                     <h4>{{ choice }}</h4>
                                 </v-btn>
                             </li>
@@ -33,6 +35,18 @@
                     </div>
                 
                 </v-card-actions>
+            </v-card>
+        </div>
+
+        <div id="results" v-if="!ongoing">
+            <v-card width="700" class="mx-auto" v-bind:color="colors[category]"> 
+                <v-card-text class="font-weight-bold">
+                    <h3 style="font-weight: normal">Results:</h3>
+                </v-card-text>
+
+                <v-card-text class="font-weight-bold">
+                    <h1 style="font-weight: normal">{{ `${this.correctAnswers}/6` }}</h1>
+                </v-card-text>
             </v-card>
         </div>
         
@@ -70,10 +84,105 @@ export default {
                 'math': '#25076b',
                 'english': '#eea500',
                 'history': '#572817'
-            }
+            },
+
+            btnColors: {
+                'normal': '#fff',
+                'red': 'red',
+                'green': 'green'
+            },
+
+            correct: "",
+            selected: "",
+            ongoing: true,
+            correctAnswers: 0,
+            remainingTime: 2000,
         }
         
     },
+
+    methods: {
+        async getQuestion() {
+            this.$axios.post(this.$API_URL+"/question", {
+                headers: {
+                    "x-access-token" : "",
+                }
+            })
+            .then((result) => {
+                this.question = result.question;
+                this.choices = result.choices;
+                this.category = result.category;
+            }).catch(error => console.log(error));
+        },
+
+        async getAnswer() {
+            this.$axios.post(this.$API_URL+"/answer", {
+                headers: {
+                    "x-access-token" : "",
+                }
+            })
+            .then((result) => {
+                result.answer;
+            }).catch(error => console.log(error));
+        },
+
+        async selectOption(choice) {
+            if (this.selected==="") {
+                this.selected = choice;
+
+                this.correct = await this.getAnswer()
+                .then((answer) => {
+                    this.correct = answer;
+                }).then(
+                    setTimeout(() => { 
+                        this.selected = ""; 
+                        if (this.numQuestion < 6) {
+                            this.numQuestion++;
+                        }
+                        else {
+                            this.goToResultsScreen();
+                            this.startTimer();
+                        }
+
+                    }, 2000)
+                ).catch(error => console.log(error));
+                
+            }
+            
+        },
+
+        goToResultsScreen() {
+            this.ongoing = false;
+        },
+
+        getColor(choice) {
+            if (choice==this.correct && this.selected.length > 0) {
+                return 'green';
+            }
+            else if (choice===this.selected || choice==='out of time') {
+                return 'red';
+            }
+            return 'normal';
+        },
+
+        startTimer() {
+            this.remainingTime = 2000
+            setInterval(() => this.decrementTime(), 100);
+        },
+
+        decrementTime() {
+            if (this.remainingTime > 100) {
+                this.remainingTime -= 100;
+            }
+            else {
+                this.selectOption('out of time');
+            }
+        },
+    },
+
+    mounted() {
+        this.startTimer();
+    }
     
 }
 </script>
@@ -94,7 +203,11 @@ export default {
     margin: 20px;
 }
 
-h1, h3 {
+h1 {
+    color: black
+}
+
+h3 {
     color: white
 }
 
@@ -103,9 +216,9 @@ h1, h3 {
     right: 0;
     top: 0;
     margin-top: 14px;
-    color: white;
+    color: black;
     width: 50px;
-    
+
     
 }
 

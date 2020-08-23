@@ -12,14 +12,14 @@ Vue.use(Router);
 
 let router = new Router({
   routes: [
-    {path: "/", name:"Home",component: Home, meta:{
+    {path: "/", name:"Home", component: Home, meta:{
       auth:true
     }},
-    {path: "/login", name: "Login", component: Login,meta:{
-      guest: false
+    {path: "/login", name: "Login", component: Login, meta:{
+      guest: true
     }},
     {path: "/register", name: "Register", component: Register, meta:{
-      guest: false
+      guest: true
     }},
     {path: "/play", name: "Play", component: Play, meta: {
       auth: true
@@ -56,7 +56,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
     else{
-      next({name: 'Home'})
+      next({name: 'Play'})
     }
   }
   else{

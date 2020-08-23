@@ -12,6 +12,7 @@
                 :counter="120"
                 label="Question"
                 required
+                color="success"
                 
             ></v-text-field>
 
@@ -20,6 +21,7 @@
             <v-row>
                 <v-col cols="24" sm="12" md="6">
                     <v-text-field
+                        color="success"
                         label="Option 1 (Correct answer)"
                         :counter="60"
                         required
@@ -28,6 +30,7 @@
 
                 <v-col cols="24" sm="12" md="6">
                     <v-text-field
+                        color="success"
                         label="Option 2"
                         :counter="60"
                         required
@@ -38,6 +41,7 @@
             <v-row>
                 <v-col cols="24" sm="12" md="6">
                     <v-text-field
+                        color="success"
                         label="Option 3"
                         :counter="60"
                         required
@@ -46,6 +50,7 @@
 
                 <v-col cols="24" sm="12" md="6">
                     <v-text-field
+                        color="success"
                         label="Option 4"
                         :counter="60"
                         required
