@@ -121,14 +121,17 @@ export default {
                           ...form
                       })
               .then(response => {
-                  localStorage.setItem('jwt',response.data.accessToken)
                   console.log(response.data.accessToken)
-                  localStorage.setItem('username', form.username) 
-                  if (localStorage.getItem('jwt') !== null){
+                  if (typeof response.data.accessToken === 'string'){
+                    localStorage.setItem('jwt',response.data.accessToken)
                     
-                    this.$router.push('Play')
-                  
-                }
+                    localStorage.setItem('username', form.username) 
+                    if (localStorage.getItem('jwt') !== null){
+                        
+                        this.$router.push('Play')
+                    
+                    }
+                  }
               })
               .catch(e => console.log(e))
             }
