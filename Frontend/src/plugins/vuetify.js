@@ -10,8 +10,10 @@ export default new Vuetify({
         themes: {
             light: {
                 primary: colors.red.darken1, //Where u change colours
-                secondary: colors.red.lighten4,
+                secondary: colors.red.lighten2,
                 accent: colors.indigo.base,
+                error: colors.red.accent3,
+                success: colors.blue.base
             }
         }
     },

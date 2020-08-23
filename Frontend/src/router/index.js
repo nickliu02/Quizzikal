@@ -16,10 +16,10 @@ let router = new Router({
       auth:true
     }},
     {path: "/login", name: "Login", component: Login,meta:{
-      guest: true
+      guest: false
     }},
     {path: "/register", name: "Register", component: Register, meta:{
-      guest: true
+      guest: false
     }},
     {path: "/play", name: "Play", component: Play, meta: {
       auth: true
