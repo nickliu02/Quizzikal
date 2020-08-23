@@ -12,3 +12,11 @@ userRouter.get('/profile', check_auth, (req,res) => {
     const result = get_profile(username);
     res.send(result);
 });
+
+userRouter.get('/games', check_auth, (req,res) => {
+
+    const { username } = req.body;
+
+
+
+});
