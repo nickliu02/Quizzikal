@@ -14,6 +14,7 @@
           
         </div>
 
+        <v-divider color="white" width="830" class="mx-auto my-5"></v-divider>
 
         <div id="scrollers">
           <ul>
