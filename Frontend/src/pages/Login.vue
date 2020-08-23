@@ -69,7 +69,7 @@ export default {
                 password : ""
             },
             
-            registerR : "/auth/register"
+            registerR : "/register"
         }
     },
     methods : {
@@ -77,7 +77,7 @@ export default {
             e.preventDefault()
             const form = this.form;
             if (form.password.length>0 && form.username.length>0){
-                this.$axios.post(this.$API_URL+"/auth/login", {
+                this.$axios.post(this.$API_URL+"/login", {
                         ...form
                     })
                 .then(response => {

@@ -15,10 +15,10 @@ let router = new Router({
     {path: "/", name:"Home", component: Home, meta:{
       auth:true
     }},
-    {path: "/auth/login", name: "Login", component: Login, meta:{
+    {path: "/login", name: "Login", component: Login, meta:{
       guest: true
     }},
-    {path: "/auth/register", name: "Register", component: Register, meta:{
+    {path: "/register", name: "Register", component: Register, meta:{
       guest: true
     }},
     {path: "/play", name: "Play", component: Play, meta: {
@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
       console.log(to.fullPath)
       localStorage.setItem('nextUrl',to.fullPath)
       next({
-        path: '/auth/login',
+        path: '/login',
       })
     }
     else{

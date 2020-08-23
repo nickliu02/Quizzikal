@@ -117,7 +117,7 @@ export default {
             console.log("registering")
             const form = this.form;
             if (0<form.username.length && form.username.length<=12 && 0<form.password.length  && form.password.length<=12 && form.password===form.otherpass){
-              this.$axios.post(this.$API_URL+"/auth/register", {
+              this.$axios.post(this.$API_URL+"/register", {
                           ...form
                       })
               .then(response => {
