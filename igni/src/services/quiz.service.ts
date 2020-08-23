@@ -21,10 +21,13 @@ export const get_quiz = (quiz_id: number): Promise<Quiz> => client.query(
     .catch(e => e);
 
 export const add_result = (username: string, is_challenger: boolean, quiz_id: number, result: 0 | 1) => client.query(
-    `UPDATE quiz SET ${is_challenger?'challenger_results':'challengee_reuslts'} = $1+'${result}'
-    WHERE ${is_challenger?'challenger_username':'challengee_username'} = username`,
+    `UPDATE quiz SET ${is_challenger?'challenger_results':'challengee_results'} = 
+    CONCAT_WS(',',${is_challenger?'challenger_results':'challengee_results'},'${result}')
+    WHERE ${is_challenger?'challenger_username':'challengee_username'} = $1`,
     [username]
 )
+    .then(res => res)
+    .catch(e => e);
 
 // export const is_challenger = (username: string, quiz_id: number) => client.query(
 //     'SELECT * FROM quiz WHERE challenger_username = $1',

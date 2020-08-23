@@ -13,7 +13,7 @@ quizRouter.post('/create', check_auth, async (req,res) => {
 
     // find questions based on catagories given
     const question_ids = await get_questions_of_catagory(body.catagories);
-
+    
     const string_ids: string = question_ids
         .map((row: {question_id: number}) => row.question_id)
         .join(',');
@@ -48,7 +48,7 @@ quizRouter.get('/next', check_auth, async (req,res) => {
             current_question.correct,
             ...current_question.wrong
                 .split(',')
-                .sort(() => Math.random()-0.5)
+                //.sort(() => Math.random()-0.5)
                 .slice(2),
         ].sort(() => Math.random()-0.5)
     }

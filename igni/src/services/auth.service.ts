@@ -1,8 +1,10 @@
 import { client } from './database.service';
+import { jwtKey } from '../config';
+
 const jwt = require('jsonwebtoken');
 
 export const register_user = (username: string, password: string): Promise<string> => client.query(
-    'INSERT INTO users(username, password) VALUES($1, $2)',
+    'INSERT INTO users(username, password) VALUES($1, $2) RETURNING username',
     [username, password]
 )
     .then(res => generateToken(res.rows[0].username))
@@ -18,5 +20,5 @@ export const authenticate_user = (username: string, password: string): Promise<s
 export const generateToken = (username: string): string => jwt.sign(
     { username: username },
     process.env.JWT_KEY,
-    { expiresIn:"1h" }
+    { expiresIn: "1h" }
 );
