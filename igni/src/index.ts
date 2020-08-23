@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/static', {dotfiles: 'allow'}));
 app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
 app.use('/user', userRouter);
-app.use('/contrib',contributeRouter)
+app.use('/contrib', contributeRouter)
 
 const cors = require('cors');
 app.use(cors);
