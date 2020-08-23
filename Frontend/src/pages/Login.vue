@@ -69,7 +69,7 @@ export default {
                 password : ""
             },
             
-            registerR : "/register"
+            registerR : "/auth/register"
         }
     },
     methods : {
@@ -77,13 +77,14 @@ export default {
             e.preventDefault()
             const form = this.form;
             if (form.password.length>0 && form.username.length>0){
-                this.$axios.post(this.$API_URL+"/login", {
+                this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
                 .then(response => {
-                    localStorage.setItem('jwt',response.data.token)                  
-                    if (localStorage.getItem('jwt') !=null){
-                        if(localStorage.getItem('nextUrl')!= null){
+                    localStorage.setItem('jwt',response.data.token);
+                    localStorage.setItem('username', form.username)                   
+                    if (localStorage.getItem('jwt') != null){
+                        if(localStorage.getItem('nextUrl') != null){
                             this.$router.push(localStorage.getItem('nextUrl'))
                         }
                         else{

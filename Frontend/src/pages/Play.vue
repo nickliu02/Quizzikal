@@ -369,7 +369,7 @@ export default {
       ongoingModalInfo: { player: "", categories: [] },
 
       isNewChallengeModalOpen: false,
-      selectedSubjects: [false, false, false, false, false],
+      selectedSubjects: [false, false, false, false, false, false],
 
       isSoloModalOpen: false,
       
@@ -391,7 +391,18 @@ export default {
 
     resetTextField() {
       this.opponentUsername = ""
-    }
+    },
+
+    async getChallenges() {
+      const profile = this.$axios.get(this.$API_URL+"/user/profile/:" + localStorage.getItem("username"), {
+        header: {},
+        body: {
+          username: localStorage.getItem("username")
+        }
+      }).then((profile) => {
+
+      })
+    },
 
   }
 }

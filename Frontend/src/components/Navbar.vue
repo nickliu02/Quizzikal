@@ -36,7 +36,6 @@
                 </v-list-item>
 
                 <v-list-item 
-                    to='/auth/login'
                     @click="logOut()"
                 >
                     <v-list-item-icon>
@@ -82,7 +81,8 @@ export default {
 
   methods: {
       logOut() {
-          
+          localStorage.removeItem('jwt');
+          this.$router.push('Login');
       }
   }
 };
