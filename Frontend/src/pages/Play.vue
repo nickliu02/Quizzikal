@@ -398,7 +398,6 @@ export default {
     },
 
     async getChallenges() {
-      console.log("hiiiiiiiii")
       const profile = this.$axios.get(this.$API_URL+"/user/profile/", {
         headers: {'x-access-token': localStorage.getItem('jwt') }},
         {

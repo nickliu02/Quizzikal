@@ -282,4 +282,8 @@ h3 {
     margin: 10px auto;
 }
 
+#question {
+    height: 130px
+}
+
 </style>
