@@ -429,8 +429,8 @@ export default {
           categories: categories
         }
       }).then((id) => {
-        console.log(id)
-        //this.getChallenges();
+        console.log(id);
+        this.getChallenges();
       }).catch((error) => {
         console.log(error);
       })
