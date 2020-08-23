@@ -233,7 +233,7 @@
               <v-btn
                 color="green darken-1"
                 text
-                @click="isNewChallengeModalOpen = false; resetTextField();"
+                @click="isNewChallengeModalOpen = false; resetTextField(); createGame(opponentUsername);"
                 
               >
                   Send!
@@ -362,6 +362,10 @@ export default {
         { name: "History", icon: mdiPillar},
       ],
 
+      subjectIndex: [
+        "BIOLOGY", "CHEMISTRY", "PHYSICS", "MATH", "ENGLISH", "HISTORY"
+      ],
+
       isChallengeModalOpen: false,
       modalInfo: { player: "", categories: [] },
 
@@ -394,16 +398,48 @@ export default {
     },
 
     async getChallenges() {
-      const profile = this.$axios.get(this.$API_URL+"/user/profile/:" + localStorage.getItem("username"), {
-        header: {},
+      console.log("hiiiiiiiii")
+      const profile = this.$axios.get(this.$API_URL+"/user/profile/", {
+        headers: {'x-access-token': localStorage.getItem('jwt') },
         body: {
-          username: localStorage.getItem("username")
+          username: localStorage.getItem("username"),
         }
       }).then((profile) => {
-
-      })
+        this.challenges = profile.data.incoming_matches,
+        this.ongoingChallenges = profile.data.pending_matches,
+        this.completedChallenges = profile.data.past_matches
+      }).catch((error) => {
+        console.log(error);
+      });
     },
 
+    async createGame(opponentUsername) {
+      let categories = [];
+      for (let i = 0; i < this.subjectIndex.length; i++) {
+        if (this.selectedSubjects[i]) {
+          categories.push(this.subjectIndex[i]);
+        }
+      }
+      
+      this.$axios.post(this.$API_URL+"/quiz/create/", {
+        headers:  {'x-access-token': localStorage.getItem('jwt') },
+        body: {
+          challenger_username: "poo",
+          challengee_username: "feces",
+          categories: categories
+        }
+      }).then((id) => {
+        console.log(id)
+        //this.getChallenges();
+      }).catch((error) => {
+        console.log(error);
+      })
+    }
+
+  },
+
+  mounted() {
+    this.getChallenges();
   }
 }
 </script>
