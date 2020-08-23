@@ -8,7 +8,7 @@ export const register_user = (username: string, password: string) => client.quer
     .catch(e => console.log(e));
 
 export const authenticate_user = (username: string, password: string) => client.query(
-    'SELECT id FROM users WHERE username = $1 AND password = $2',
+    'SELECT * FROM users WHERE username = $1 AND password = $2',
     [username, password]
 )
     .then(res => console.log(res))
