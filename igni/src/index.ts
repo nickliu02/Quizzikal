@@ -15,7 +15,7 @@ const morgan = require('morgan');
 app.use(morgan('dev'));
 
 const cors = require('cors');
-app.use(cors);
+app.use(cors());
 
 //router
 app.use('/auth', authRouter);
