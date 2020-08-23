@@ -124,7 +124,7 @@ export default {
                   localStorage.setItem('jwt',response.data.token)
                   if (localStorage.getItem('jwt') !=null){
                     
-                    this.$router.push('Home')
+                    this.$router.push('Play')
                   
                 }
               })

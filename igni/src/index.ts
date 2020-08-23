@@ -10,6 +10,9 @@ const app = express();
 const bodyPareser = require('body-parser');
 app.use(bodyPareser.json());
 
+//enable static
+app.use(express.static(__dirname + '/static', {dotfiles: 'allow'}));
+
 //router
 app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
