@@ -48,12 +48,11 @@ quizRouter.get('/next', check_auth, async (req,res) => {
             current_question.correct,
             ...current_question.wrong
                 .split(',')
-                //.sort(() => Math.random()-0.5)
-                .slice(2),
+                .sort(() => Math.random()-0.5)
+                .slice(0,2),
         ].sort(() => Math.random()-0.5)
     }
 
-    console.log(question);
     res.send(question);
 
 });
