@@ -11,12 +11,13 @@ const app = express();
 const bodyPareser = require('body-parser');
 app.use(bodyPareser.json());
 
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
 const cors = require('cors');
 app.use(cors);
 
 //router
-app.post('/', (req,res) => { res.send('you are connected')});
-
 app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
 app.use('/user', userRouter);
