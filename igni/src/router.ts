@@ -3,11 +3,12 @@ import { register_user } from './services/auth.service';
 
 export const router = express.Router();
 
-router.post('/register', (req,res) => {
+router.post('/register', async (req,res) => {
 
     const { username, password } = req.body;
 
-    register_user(username, password);
+    const result = await register_user(username, password);
+    res.send('success');
 
 });
 
