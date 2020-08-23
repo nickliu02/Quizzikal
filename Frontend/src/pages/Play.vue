@@ -1,15 +1,15 @@
 <template>
-  <v-app>
-
-        <h1 id="title">Quizzikal</h1>
+  
+  <v-app class="accent">
+    <h1 id="title">Quizzikal</h1>
 
         <div id="buttons">
           <div>
-            <v-btn depressed x-large color="accent" @click.stop="isNewChallengeModalOpen = true, selectedSubjects=[false, false, false, false, false, false]">New Challenge</v-btn>
+            <v-btn depressed x-large color="white" @click.stop="isNewChallengeModalOpen = true, selectedSubjects=[false, false, false, false, false, false]">New Challenge</v-btn>
           </div>
 
           <div>
-            <v-btn depressed x-large color="accent">Solo Play</v-btn>
+            <v-btn depressed x-large color="white">Solo Play</v-btn>
           </div>
           
         </div>
@@ -269,7 +269,12 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-  </v-app>    
+    </v-app>    
+
+  
+
+        
+
 </template>
 
 <script>
@@ -357,12 +362,13 @@ export default {
 #wrapper {
   width: 100%;
   height: 100%;
-  text-align: center;
+  background-color: #3f51b5;
 }
 
 #title {
   font-size: 60px;
   text-align: center;
+  color: white;
 }
 
 #buttons {
