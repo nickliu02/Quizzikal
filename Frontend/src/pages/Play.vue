@@ -233,7 +233,7 @@
               <v-btn
                 color="green darken-1"
                 text
-                @click="isNewChallengeModalOpen = false; resetTextField(); createGame(opponentUsername);"
+                @click="isNewChallengeModalOpen = false; createGame(opponentUsername); resetTextField();"
                 
               >
                   Send!

@@ -130,23 +130,42 @@ export default {
 
     methods: {
         async getQuestion() {
-            this.$axios.post(this.$API_URL+"/question", {
-                headers: {
-                    "x-access-token" : "",
-                }
-            })
+            console.log("requesting questions")
+            this.$axios.get(this.$API_URL+"/quiz/next",
+                {
+                    headers: {'x-access-token': localStorage.getItem('jwt') }
+
+                },
+
+                {
+                    body: {
+                        username: localStorage.getItem('username'),
+                        id: '26',
+                    }    
+                },
+
+                
+                
+            )
             .then((result) => {
+                console.log(result);
                 this.question = result.data.question;
                 this.choices = result.data.choices;
-                this.category = result.data.category;
+                this.category = result.data.catagory;
             }).catch(error => console.log(error));
         },
 
         async getAnswer() {
-            this.$axios.post(this.$API_URL+"/answer", {
+            this.$axios.post(this.$API_URL+"/answer/submit", {
                 headers: {
                     "x-access-token" : "",
-                }
+                }},
+                
+                {
+                    id: '26', 
+                    username: localStorage.getItem('username'),
+                    question: this.question
+                
             })
             .then((result) => {
                 result.data.answer;
@@ -229,6 +248,7 @@ export default {
 
     mounted() {
         this.startTimer();
+        this.getQuestion();
     }
     
 }
