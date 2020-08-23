@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e4807321-b9cc-4620-bc43-8d76d7ce6e44" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/question_grabber.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/igni/src/routes/contribute.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/routes/contribute.router.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +70,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.serve">
+  <component name="RunManager" selected="Python.question_grabber">
+    <configuration name="question_grabber" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Ignition_Hacks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/question_grabber.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/Frontend/package.json" />
       <command value="run" />
@@ -93,6 +115,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.question_grabber" />
         <item itemvalue="npm.serve" />
         <item itemvalue="npm.build" />
       </list>
@@ -117,7 +140,8 @@
       <workItem from="1598197519781" duration="1519000" />
       <workItem from="1598202276499" duration="39000" />
       <workItem from="1598203134351" duration="364000" />
-      <workItem from="1598210031268" duration="623000" />
+      <workItem from="1598210031268" duration="849000" />
+      <workItem from="1598214106213" duration="519000" />
     </task>
     <task id="LOCAL-00001" summary="setting up node">
       <created>1598110713760</created>
@@ -182,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598201474052</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="setting up node">
+      <created>1598213726869</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1598213726869</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
