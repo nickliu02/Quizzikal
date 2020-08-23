@@ -81,7 +81,7 @@ export default {
                         ...form
                     })
                 .then(response => {
-                    localStorage.setItem('jwt',response.data.token);
+                    localStorage.setItem('jwt',response.data.accessToken);
                     localStorage.setItem('username', form.username)                   
                     if (localStorage.getItem('jwt') != null){
                         if(localStorage.getItem('nextUrl') != null){
