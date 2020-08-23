@@ -12,7 +12,7 @@ Vue.use(Router);
 
 let router = new Router({
   routes: [
-    {path: "/", name:"Home", component: Home, meta:{
+    {path: "/", name:"Play", component: Play, meta:{
       auth:true
     }},
     {path: "/login", name: "Login", component: Login, meta:{
