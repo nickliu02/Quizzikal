@@ -182,6 +182,7 @@
                   color="green darken-1"
                   text
                   @click="isChallengeModalOpen = false"
+                  :to="'/quiz'"
                 >
                     Accept
                 </v-btn>
@@ -224,7 +225,7 @@
               <v-btn
                 color="red darken-1"
                 text
-                @click="isNewChallengeModalOpen = false"
+                @click="isNewChallengeModalOpen = false; resetTextField()"
               >
                   Cancel
               </v-btn>
@@ -232,7 +233,8 @@
               <v-btn
                 color="green darken-1"
                 text
-                @click="isNewChallengeModalOpen = false"
+                @click="isNewChallengeModalOpen = false; resetTextField();"
+                
               >
                   Send!
               </v-btn>
@@ -264,6 +266,7 @@
                 color="green darken-1"
                 text
                 @click="isOngoingChallengeModalOpen = false"
+                :to="'/quiz'"
               >
                   Continue
               </v-btn>
@@ -337,14 +340,6 @@ export default {
   },
 
   methods: {
-    printCategories(categories) {
-      let out = "";
-      for (let i = 0; i < categories.length; i++) {
-        out += categories[i] + ", ";
-      }
-      return out.substring(0, out.length-2);
-    },
-
     openChallengeModal(info) {
       this.isChallengeModalOpen = true;
       this.modalInfo = info;
@@ -354,6 +349,10 @@ export default {
       this.isOngoingChallengeModalOpen = true;
       this.ongoingModalInfo = info;
     },
+
+    resetTextField() {
+      this.opponentUsername = ""
+    }
 
   }
 }

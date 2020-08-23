@@ -7,8 +7,20 @@
                     <h1 style="font-weight: normal">{{ `Question ${numQuestion} of 6` }}</h1>
                 </v-card-text>
 
+                <v-card-text id="time" v-if="ongoing">
+                    <h2>{{ Math.ceil(remainingTime / 1000) + "s" }}</h2>
+                </v-card-text>
+
                 <v-icon id="icon">{{ icons[category] }}</v-icon>
 
+                <v-progress-linear
+                    v-if="ongoing"
+                    color="green"
+                    v-bind:value="remainingTime / maxTime * 100"
+                    max="100"
+                    striped
+                ></v-progress-linear>
+                
             </v-card>
          </div>
 
@@ -41,12 +53,24 @@
         <div id="results" v-if="!ongoing">
             <v-card width="700" class="mx-auto" v-bind:color="colors[category]"> 
                 <v-card-text class="font-weight-bold">
-                    <h3 style="font-weight: normal">Results:</h3>
+                    <h1 style="font-weight: normal; text-align: center;">Results</h1>
                 </v-card-text>
 
                 <v-card-text class="font-weight-bold">
-                    <h1 style="font-weight: normal">{{ `${this.correctAnswers}/6` }}</h1>
+                    <h1 style="font-weight: normal; font-size:70px; text-align:center;">{{ `${this.correctAnswers}/6` }}</h1>
                 </v-card-text>
+
+                <v-card-actions>
+                    <div id="home">   
+                        <v-btn x-large class="text-xs-center"
+                        :to="'/play'"
+                        >
+                            Home
+                        </v-btn>
+                    </div>
+                    
+                
+                </v-card-actions>
             </v-card>
         </div>
         
@@ -83,7 +107,8 @@ export default {
                 'physics': '#46178f',
                 'math': '#25076b',
                 'english': '#eea500',
-                'history': '#572817'
+                'history': '#572817',
+                '' : '#fff'
             },
 
             btnColors: {
@@ -92,11 +117,13 @@ export default {
                 'green': 'green'
             },
 
-            correct: "",
+            correct: "10",
             selected: "",
             ongoing: true,
             correctAnswers: 0,
-            remainingTime: 2000,
+            remainingTime: 5000,
+            maxTime: 5000,
+            timer: null
         }
         
     },
@@ -130,22 +157,35 @@ export default {
             if (this.selected==="") {
                 this.selected = choice;
 
-                this.correct = await this.getAnswer()
+                /*this.correct = await this.getAnswer()
                 .then((answer) => {
                     this.correct = answer;
-                }).then(
+                }).catch(error => console.log(error))
+                .finally(
                     setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
                             this.numQuestion++;
+                            this.startTimer();
                         }
                         else {
                             this.goToResultsScreen();
-                            this.startTimer();
                         }
 
-                    }, 2000)
-                ).catch(error => console.log(error));
+                    }, 2000));*/
+
+                setTimeout(() => { 
+                        this.selected = ""; 
+                        if (this.numQuestion < 6) {
+                            this.numQuestion++;
+                            this.startTimer();
+                        }
+                        else {
+                            this.goToResultsScreen();
+                            this.category = '';
+                        }
+                    }, 1000   
+                )
                 
             }
             
@@ -156,23 +196,26 @@ export default {
         },
 
         getColor(choice) {
-            if (choice==this.correct && this.selected.length > 0) {
+            if (choice===this.correct && this.selected.length > 0) {
                 return 'green';
             }
-            else if (choice===this.selected || choice==='out of time') {
+            else if (choice===this.selected || this.selected==='out of time') {
                 return 'red';
             }
             return 'normal';
         },
 
         startTimer() {
-            this.remainingTime = 2000
-            setInterval(() => this.decrementTime(), 100);
+            this.remainingTime = this.maxTime;
+            clearInterval(this.timer);
+            this.timer = setInterval(() => this.decrementTime(), 100);
         },
 
         decrementTime() {
-            if (this.remainingTime > 100) {
+            
+            if (this.remainingTime >= 100) {
                 this.remainingTime -= 100;
+                
             }
             else {
                 this.selectOption('out of time');
@@ -220,6 +263,19 @@ h3 {
     width: 50px;
 
     
+}
+
+#time {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: right;
+    margin-right: 30px;
+}
+
+#home {
+    text-align: center;
+    margin: 10px auto;
 }
 
 </style>
