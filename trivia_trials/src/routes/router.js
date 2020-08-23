@@ -9,16 +9,16 @@ router.get('/',(req,res)=>{
 });
 router.post('/login',(req,res) =>{
     //Check if code is right
-    var passcode = req.body.passcode;
+    var username = req.body.username;
+    var password = req.body.password;
 
-
-    pool.query('SELECT id FROM user WHERE user.passcode = passcode VALUE $1', [passcode], (error, results) => {
+    pool.query('SELECT id FROM user WHERE user.password =$1 AND user.username= $2', [password,username], (error, results) => {
         if (error) {
             throw error
         }
-        console.log(result.insertId)
+        console.log(result.username)
         const token = jwt.sign({
-                id:result.insertId
+                username:result.username
 
             },
             process.env.JWT_KEY,
@@ -41,28 +41,49 @@ router.post('/register',(req,res) =>{
 
 });
 router.get('/profile',checkAuth,(req,res) =>{
-    const name = req.body.name;
-    pool.query('',[name],(error,results)=>{
+    pool.query('SELECT id FROM user WHERE user.username =$1',[req.userData.username],(error,results)=>{
         if (error) {
             throw error
         }
         res.status(200).json(results.rows);
     });
 });
+router.post('/createquiz',checkAuth,(req,res)=>{
+    const name = req.body.name;
+    pool.query('SELECT id FROM question ORDER BY RAND() LIMIT 6',(error,results)=>{
+        pool.query('INSERT INTO quiz (name,questions) VALUES ($1,$2)',[name,results.toString()],(error,results) =>{
+            if(error){
+                throw error;
+            }
+            res.status(201).send('created');
+        })
+
+
+    });
+
+
+});
 router.get('/questions',checkAuth,(req,res) =>{
 
-    pool.query('',(error,results)=>{
+    pool.query('SELECT * FROM question WHERE question.id=$1',[req.body.id],(error,results)=>{
         if (error) {
-            throw error
+            throw error;
         }
         res.status(201).json(results.rows);
 
     });
 
 });
-router.get('/leaderboards',checkAuth,(req,res) =>{
+
+router.get('/answer',checkAuth,(req,res)=>{
+    const q= req.question;
+    pool.query('SELECT * FROM question WHERE question.text=$1',{q},(error,results)=>{
+        if(error){
+            throw error;
+        }
+        res.status(201).json(results.answer==req.body.answer);
+    });
+
 
 });
-
-
 module.exports = router;
