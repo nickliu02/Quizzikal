@@ -26,7 +26,7 @@
                         label="Option 1 (Correct answer)"
                         :counter="60"
                         required
-                        v-model="form.choices[0]"
+                        v-model="form.answer"
                     ></v-text-field>
                 </v-col>
 
@@ -36,7 +36,7 @@
                         label="Option 2"
                         :counter="60"
                         required
-                        v-model="form.choices[1]"
+                        v-model="form.wrong[0]"
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -48,7 +48,7 @@
                         label="Option 3"
                         :counter="60"
                         required
-                        v-model="form.choices[2]"
+                        v-model="form.wrong[1]"
                     ></v-text-field>
                 </v-col>
 
@@ -58,13 +58,24 @@
                         label="Option 4"
                         :counter="60"
                         required
-                        v-model="form.choices[3]"
+                        v-model="form.wrong[2]"
                     ></v-text-field>
                 </v-col>
             </v-row>
+            
+            <v-overflow-btn
+                class="my-2"
+                :items="dropdown_font"
+                label="Select a category"
+                v-model="form.catagory"
+            ></v-overflow-btn>
+                
+                
+        
 
             <v-btn
                 class="mr-8"
+                @click="onSubmit"
             >Submit</v-btn>
 
         </v-form>
@@ -84,8 +95,31 @@ export default {
         return {
             form : {
                 question: '',
-                choices: ['','','','']
-            }
+                answer: '',
+                wrong: ['','',''],
+                catagory: ''
+            },
+            dropdown_font: ['BIOLOGY', 'CHEMISTRY', 'MATH', 'PHYSICS', 'HISTORY','ENGLISH'],
+        }
+    },
+    methods: {
+        onSubmit(e){
+            const form = this.form;
+            console.log(form)
+            this.$axios.post(this.$API_URL+"/contrib/create", {
+                ...form
+            },
+            {
+            headers:  {'x-access-token': localStorage.getItem('jwt') }
+            })
+            .then(response => {
+                if (response.data.message === "Success"){
+                    this.form.question = "";
+                    this.form.correct = '';
+                    this.form.wrong = ['','','']
+                    this.form.catagory = '';
+                }
+            })
         }
     }
 }
