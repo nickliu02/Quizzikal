@@ -87,7 +87,7 @@ export default {
                             this.$router.push(localStorage.getItem('nextUrl'))
                         }
                         else{
-                            this.$router.push('Home')
+                            this.$router.push('Play')
                         }
                     }
                     
