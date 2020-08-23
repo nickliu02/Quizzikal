@@ -174,6 +174,9 @@ export default {
 
                     }, 2000));*/
 
+                clearInterval(this.timer);
+                this.remainingTime = this.maxTime;
+                
                 setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
@@ -183,6 +186,7 @@ export default {
                         else {
                             this.goToResultsScreen();
                             this.category = '';
+                            
                         }
                     }, 1000   
                 )
@@ -207,7 +211,7 @@ export default {
 
         startTimer() {
             this.remainingTime = this.maxTime;
-            clearInterval(this.timer);
+            
             this.timer = setInterval(() => this.decrementTime(), 100);
         },
 
