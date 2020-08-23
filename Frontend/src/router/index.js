@@ -6,6 +6,7 @@ import Router from "vue-router";
 import Profile from "../pages/Profile.vue";
 import Contribute from "../pages/Contribute.vue";
 import Home from "../components/Home.vue";
+import Quiz from "../components/Quiz.vue";
 Vue.use(Router);
 
 
@@ -29,6 +30,10 @@ let router = new Router({
     {path: "/contribute", name: "Contribute", component: Contribute, meta: {
       auth: true
     }},
+    {path: "/quiz", name: "Quiz", component: Quiz, meta: {
+        auth: true
+    }},
+
   ],
   mode: "history",
 });
@@ -59,4 +64,4 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-export default router
+export default router;
