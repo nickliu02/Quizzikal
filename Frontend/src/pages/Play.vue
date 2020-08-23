@@ -400,11 +400,11 @@ export default {
     async getChallenges() {
       console.log("hiiiiiiiii")
       const profile = this.$axios.get(this.$API_URL+"/user/profile/", {
-        headers: {'x-access-token': localStorage.getItem('jwt') },
-        body: {
+        headers: {'x-access-token': localStorage.getItem('jwt') }},
+        {
           username: localStorage.getItem("username"),
         }
-      }).then((profile) => {
+      ).then((profile) => {
         this.challenges = profile.data.incoming_matches,
         this.ongoingChallenges = profile.data.pending_matches,
         this.completedChallenges = profile.data.past_matches
