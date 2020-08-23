@@ -10,9 +10,12 @@ quizRouter.post('/create', (req,res) => {
     const body: { challenger_username: string, challengee_username: string, catagories: Catagory[] } = req.body;
 
     //find questions based on catagories given
-    const question_ids = get_questions_of_catagory(body.catagories);
+    const question_ids: string = get_questions_of_catagory(body.catagories)
+        //fix dis !!
+        .map((row: {question_id: number}) => row.question_id)
+        .join(',');
 
-    const result = create_quiz(body.challenger_username,body.challengee_username,'');
+    const result = create_quiz(body.challenger_username,body.challengee_username,question_ids);
     res.send(result);
 
 });
