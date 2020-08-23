@@ -1,5 +1,7 @@
 import express from 'express';
 import { register_user, authenticate_user } from './services/auth.service';
+import { create_quiz } from './services/quiz.service';
+import { get_profile } from './services/user.service';
 
 export const router = express.Router();
 
@@ -22,9 +24,14 @@ router.post('/login', (req,res) => {
 
 router.get('/profile', (req,res) => {
 
+    const { username } = req.body;
+
 });
 
 router.post('/createquiz', (req,res) => {
 
-    const { }
+    const { challenger_username, challengee_username } = req.body;
+
+    const result = create_quiz(challenger_username,challengee_username);
+    res.send(result);
 });
