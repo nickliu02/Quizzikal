@@ -19,5 +19,5 @@ export const get_question = (question_id: number) => client.query(
     'SELECT * FROM questions WHERE question_id = $1',
     [question_id]
 )
-    .then(res => res.rows)
+    .then(res => res.rows[0])
     .catch(e => e);

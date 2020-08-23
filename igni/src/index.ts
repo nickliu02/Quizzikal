@@ -15,8 +15,8 @@ app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
 app.use('/user', userRouter);
 
-// const cors = require('cors');
-// app.use(cors);
+const cors = require('cors');
+app.use(cors);
 
 app.use(express.json)
 
