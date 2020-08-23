@@ -1,6 +1,6 @@
 import { client } from './database.service';
 import { Catagory } from '../types/catagories';
-import { Question } from '../types/catagories';
+import { Question } from '../types/database.types';
 
 const QUIZ_BATCH_SIZE = 6;
 

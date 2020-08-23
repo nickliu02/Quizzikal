@@ -136,9 +136,9 @@ export default {
                 }
             })
             .then((result) => {
-                this.question = result.question;
-                this.choices = result.choices;
-                this.category = result.category;
+                this.question = result.data.question;
+                this.choices = result.data.choices;
+                this.category = result.data.category;
             }).catch(error => console.log(error));
         },
 
@@ -149,7 +149,7 @@ export default {
                 }
             })
             .then((result) => {
-                result.answer;
+                result.data.answer;
             }).catch(error => console.log(error));
         },
 

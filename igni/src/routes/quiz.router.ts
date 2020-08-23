@@ -3,10 +3,11 @@ import { create_quiz, get_quiz, add_result, is_challenger, get_current_question_
 import { get_questions_of_catagory, get_question } from '../services/question.service';
 import { Catagory } from '../types/catagories';
 import { Question } from '../types/database.types';
+import {check_auth} from "./middleware/check-auth";
 
 export const quizRouter = express.Router();
 
-quizRouter.post('/create', async (req,res) => {
+quizRouter.post('/create',check_auth, async (req,res) => {
 
     const body: { challenger_username: string, challengee_username: string, catagories: Catagory[] } = req.body;
 
@@ -24,11 +25,12 @@ quizRouter.post('/create', async (req,res) => {
 
 });
 
-quizRouter.get('/next', async (req,res) => {
+quizRouter.get('/next', check_auth,async (req,res) => {
 
     const body: { username: string, quiz_id: number } = req.body;
 
     const quiz = await get_quiz(body.quiz_id);
+    console.log(quiz);
 
     //TODO: some sort of auth quiz function just to check if user is acutally in quiz and tehre are still questions to do
     //count how many questions user has answered
@@ -56,11 +58,15 @@ quizRouter.get('/next', async (req,res) => {
 
 });
 
+<<<<<<< HEAD
 quizRouter.post('/submit', async (req,res) => {
 
     const body: { username: string, quiz_id: number, answer: string } = req.body;
 
     //make sure player is in quiz and there are still questions to do
+=======
+quizRouter.post('/submit',check_auth, (req,res) => {
+>>>>>>> 0d4201634f6a32271c154c598bf38a935e231d27
 
     const quiz = await get_quiz(body.quiz_id);
 
