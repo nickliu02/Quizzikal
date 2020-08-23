@@ -5,4 +5,4 @@ export const get_profile = (username: string) => client.query(
     [username]
 )
     .then(res => res.rows[0])
-    .catch(e => console.log(e));
+    .catch(e => { console.log(e); return e; } );

@@ -8,6 +8,7 @@ export const check_auth = (req:any,res:any,next:any) =>{
         const decoded = jwt.verify(token, jwtKey);
 
         req.userData = decoded;
+
     } catch(error){
         return res.status(401).json({
             message:'Auth failed'

@@ -18,14 +18,14 @@ export const get_quiz = (quiz_id: number): Promise<Quiz> => client.query(
     [quiz_id]
 )
     .then(res => res.rows[0])
-    .catch(e => console.log(e));
+    .catch(e => { console.log(e); return e; } );
 
 export const get_user_quizzes = (username: number): Promise<Quiz> => client.query(
     'SELECT * FROM quiz WHERE challenger_username = $1 OR challengee_username = $1',
     [username]
 )
     .then(res => res.rows)
-    .catch(e => e);
+    .catch(e => { console.log(e); return e; } );
 
 export const add_result = (username: string, is_challenger: boolean, quiz_id: number, result: 0 | 1) => client.query(
     `UPDATE quiz SET ${is_challenger?'challenger_results':'challengee_results'} = 
@@ -34,7 +34,7 @@ export const add_result = (username: string, is_challenger: boolean, quiz_id: nu
     [username]
 )
     .then(res => res)
-    .catch(e => e);
+    .catch(e => { console.log(e); return e; } );
 
 // export const is_challenger = (username: string, quiz_id: number) => client.query(
 //     'SELECT * FROM quiz WHERE challenger_username = $1',
