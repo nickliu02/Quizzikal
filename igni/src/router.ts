@@ -23,3 +23,8 @@ router.post('/login', (req,res) => {
 router.get('/profile', (req,res) => {
 
 });
+
+router.post('/createquiz', (req,res) => {
+
+    const { }
+});
