@@ -50,7 +50,20 @@ quizRouter.get('/next', check_auth,async (req,res) => {
 
     //choose right and wrong answers and send to client
     const current_question = await get_question(current_question_id);
-    console.log(current_question);
+
+    const question = {
+        text: current_question.text,
+        choices: [
+            current_question.correct,
+            ...current_question.wrong
+                .split(',')
+                .sort(() => Math.random()-0.5)
+                .slice(2),
+        ].sort(() => Math.random()-0.5)
+    }
+
+    console.log(question);
+    res.send(question);
 
 });
 

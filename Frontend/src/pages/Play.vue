@@ -9,7 +9,7 @@
           </div>
 
           <div>
-            <v-btn depressed x-large color="white">Solo Play</v-btn>
+            <v-btn depressed x-large color="white" @click.stop="isSoloModalOpen = true">Solo Play</v-btn>
           </div>
           
         </div>
@@ -182,6 +182,7 @@
                   color="green darken-1"
                   text
                   @click="isChallengeModalOpen = false"
+                  :to="'/quiz'"
                 >
                     Accept
                 </v-btn>
@@ -224,7 +225,7 @@
               <v-btn
                 color="red darken-1"
                 text
-                @click="isNewChallengeModalOpen = false"
+                @click="isNewChallengeModalOpen = false; resetTextField()"
               >
                   Cancel
               </v-btn>
@@ -232,7 +233,8 @@
               <v-btn
                 color="green darken-1"
                 text
-                @click="isNewChallengeModalOpen = false"
+                @click="isNewChallengeModalOpen = false; resetTextField(); createGame(opponentUsername);"
+                
               >
                   Send!
               </v-btn>
@@ -264,10 +266,47 @@
                 color="green darken-1"
                 text
                 @click="isOngoingChallengeModalOpen = false"
+                :to="'/quiz'"
               >
                   Continue
               </v-btn>
             </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog
+          v-model="isSoloModalOpen"
+          max-width="300"
+        >
+
+          <v-card id="soloModal">
+            <div style="text-align: center">
+              <v-btn
+                text
+                @click="isSoloModalOpen = false"
+                :to="'/quiz'"
+                width="300"
+                x-large
+              >
+                  New Game
+              </v-btn>
+            </div>
+              
+          
+
+            <div style="text-align: center">
+              <v-btn
+                text
+                @click="isSoloModalOpen = false"
+                :to="'/quiz'"
+                width="300"
+                x-large
+              >
+                  Practice Missed Questions
+              </v-btn>
+            </div>
+              
+            
           </v-card>
         </v-dialog>
     </v-app>    
@@ -323,6 +362,10 @@ export default {
         { name: "History", icon: mdiPillar},
       ],
 
+      subjectIndex: [
+        "BIOLOGY", "CHEMISTRY", "PHYSICS", "MATH", "ENGLISH", "HISTORY"
+      ],
+
       isChallengeModalOpen: false,
       modalInfo: { player: "", categories: [] },
 
@@ -330,21 +373,16 @@ export default {
       ongoingModalInfo: { player: "", categories: [] },
 
       isNewChallengeModalOpen: false,
-      selectedSubjects: [false, false, false, false, false],
+      selectedSubjects: [false, false, false, false, false, false],
+
+      isSoloModalOpen: false,
+      
 
       opponentUsername: "",
     }
   },
 
   methods: {
-    printCategories(categories) {
-      let out = "";
-      for (let i = 0; i < categories.length; i++) {
-        out += categories[i] + ", ";
-      }
-      return out.substring(0, out.length-2);
-    },
-
     openChallengeModal(info) {
       this.isChallengeModalOpen = true;
       this.modalInfo = info;
@@ -355,6 +393,53 @@ export default {
       this.ongoingModalInfo = info;
     },
 
+    resetTextField() {
+      this.opponentUsername = ""
+    },
+
+    async getChallenges() {
+      console.log("hiiiiiiiii")
+      const profile = this.$axios.get(this.$API_URL+"/user/profile/", {
+        headers: {'x-access-token': localStorage.getItem('jwt') },
+        body: {
+          username: localStorage.getItem("username"),
+        }
+      }).then((profile) => {
+        this.challenges = profile.data.incoming_matches,
+        this.ongoingChallenges = profile.data.pending_matches,
+        this.completedChallenges = profile.data.past_matches
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+
+    async createGame(opponentUsername) {
+      let categories = [];
+      for (let i = 0; i < this.subjectIndex.length; i++) {
+        if (this.selectedSubjects[i]) {
+          categories.push(this.subjectIndex[i]);
+        }
+      }
+      
+      this.$axios.post(this.$API_URL+"/quiz/create/", {
+        headers:  {'x-access-token': localStorage.getItem('jwt') },
+        body: {
+          challenger_username: "poo",
+          challengee_username: "feces",
+          categories: categories
+        }
+      }).then((id) => {
+        console.log(id);
+        this.getChallenges();
+      }).catch((error) => {
+        console.log(error);
+      })
+    }
+
+  },
+
+  mounted() {
+    this.getChallenges();
   }
 }
 </script>
@@ -439,6 +524,11 @@ v-tooltip {
 .yellow {
   background-color: lightyellow;
   text-align: center;
+}
+
+#soloModal v-btn {
+  text-align: center;
+  margin: 10px auto;
 }
 
 </style>
