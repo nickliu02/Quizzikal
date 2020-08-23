@@ -67,11 +67,11 @@ export default {
       // this.$axios.post(this.$API_URL+"/profile", {
       //   headers: {
       //     'x-access-token': localStorage.getItem('jwt')
-      //   },
-      //   body: {
+      //   }},
+      //   {
       //     username: localStorage.getItem('username')
       //   }
-      //   })
+      //   )
       //   .then(response => {
       //       this.profile=response.data;
       //       console.log(this.profile)

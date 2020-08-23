@@ -8,11 +8,12 @@
         
         <v-form>
             <v-text-field
-                v-model="question"
+                v-model="form.question"
                 :counter="120"
                 label="Question"
                 required
                 color="success"
+                
                 
             ></v-text-field>
 
@@ -25,6 +26,7 @@
                         label="Option 1 (Correct answer)"
                         :counter="60"
                         required
+                        v-model="form.choices[0]"
                     ></v-text-field>
                 </v-col>
 
@@ -34,6 +36,7 @@
                         label="Option 2"
                         :counter="60"
                         required
+                        v-model="form.choices[1]"
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -45,6 +48,7 @@
                         label="Option 3"
                         :counter="60"
                         required
+                        v-model="form.choices[2]"
                     ></v-text-field>
                 </v-col>
 
@@ -54,6 +58,7 @@
                         label="Option 4"
                         :counter="60"
                         required
+                        v-model="form.choices[3]"
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -77,8 +82,10 @@ export default {
     name: "Contribute",
     data() {
         return {
-            question: '',
-            choices: []
+            form : {
+                question: '',
+                choices: ['','','','']
+            }
         }
     }
 }

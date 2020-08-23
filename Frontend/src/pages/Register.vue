@@ -116,18 +116,22 @@ export default {
             e.preventDefault()
             console.log("registering")
             const form = this.form;
-            if (0<form.username.length && form.username.length<=12 && 0<form.password.length  && form.password.length<=12 && form.password===form.otherpass){
+            if (0 < form.username.length && form.username.length <= 12 && 0<form.password.length  && form.password.length<=12 && form.password===form.otherpass){
               this.$axios.post(this.$API_URL+"/auth/register", {
                           ...form
                       })
               .then(response => {
-                  localStorage.setItem('jwt',response.data.token)
-                  localStorage.setItem('username', form.username) 
-                  if (localStorage.getItem('jwt') !=null){
+                  console.log(response.data.accessToken)
+                  if (typeof response.data.accessToken === 'string'){
+                    localStorage.setItem('jwt',response.data.accessToken)
                     
-                    this.$router.push('Play')
-                  
-                }
+                    localStorage.setItem('username', form.username) 
+                    if (localStorage.getItem('jwt') !== null){
+                        
+                        this.$router.push('Play')
+                    
+                    }
+                  }
               })
               .catch(e => console.log(e))
             }
