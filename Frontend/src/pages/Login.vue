@@ -81,9 +81,11 @@ export default {
                         ...form
                     })
                 .then(response => {
-                    localStorage.setItem('jwt',response.data.accessToken);
-                    localStorage.setItem('username', form.username)                   
-                    if (localStorage.getItem('jwt') != null){
+                    console.log(response.data.accessToken )
+                    if (typeof response.data.accessToken === 'string'){
+                        localStorage.setItem('jwt',response.data.accessToken);
+                        localStorage.setItem('username', form.username) 
+
                         if(localStorage.getItem('nextUrl') != null){
                             this.$router.push(localStorage.getItem('nextUrl'))
                         }
