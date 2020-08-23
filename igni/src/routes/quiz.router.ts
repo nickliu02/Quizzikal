@@ -7,7 +7,7 @@ import {check_auth} from "./middleware/check-auth";
 
 export const quizRouter = express.Router();
 
-quizRouter.post('/create',check_auth, async (req,res) => {
+quizRouter.post('/create', async (req,res) => {
 
     const body: { challenger_username: string, challengee_username: string, catagories: Catagory[] } = req.body;
 
@@ -25,7 +25,7 @@ quizRouter.post('/create',check_auth, async (req,res) => {
 
 });
 
-quizRouter.get('/next', check_auth,async (req,res) => {
+quizRouter.get('/next', check_auth, async (req,res) => {
 
     const body: { username: string, quiz_id: number } = req.body;
 

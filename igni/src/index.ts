@@ -11,18 +11,15 @@ const app = express();
 const bodyPareser = require('body-parser');
 app.use(bodyPareser.json());
 
-//enable static
-app.use(express.static(__dirname + '/static', {dotfiles: 'allow'}));
-
 const cors = require('cors');
 app.use(cors);
 
 //router
+app.post('/', (req,res) => { res.send('you are connected')});
+
 app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
 app.use('/user', userRouter);
 app.use('/contrib', contributeRouter)
-
-app.use(express.json)
 
 const server = app.listen(3000, serverIp, () => console.log('server started'));
