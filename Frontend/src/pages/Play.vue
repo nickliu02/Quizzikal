@@ -419,11 +419,12 @@ export default {
           categories.push(this.subjectIndex[i]);
         }
       }
-      console.log(localStorage.getItem('jwt'))
+
+      console.log(categories);
       this.$axios.post(this.$API_URL+"/quiz/create/",
         {
-          challenger_username: "pinosaur",
-          challengee_username: "feces",
+          challenger_username: localStorage.getItem("username"),
+          challengee_username: opponentUsername,
           catagories: categories
           
         },

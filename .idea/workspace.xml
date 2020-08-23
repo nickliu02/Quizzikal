@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e4807321-b9cc-4620-bc43-8d76d7ce6e44" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/igni/src/routes/contribute.router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/igni/src/services/contrib.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/igni/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/igni/src/routes/auth.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/routes/auth.router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/igni/src/routes/quiz.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/routes/quiz.router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/igni/src/routes/user.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/routes/user.router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/igni/src/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trivia_trials/src/routes/middleware/check-auth.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trivia_trials/src/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/trivia_trials/src/routes/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/igni/src/routes/contribute.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/igni/src/routes/contribute.router.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -123,7 +114,10 @@
       <workItem from="1598153194096" duration="709000" />
       <workItem from="1598191063062" duration="2257000" />
       <workItem from="1598195118080" duration="710000" />
-      <workItem from="1598197519781" duration="1127000" />
+      <workItem from="1598197519781" duration="1519000" />
+      <workItem from="1598202276499" duration="39000" />
+      <workItem from="1598203134351" duration="364000" />
+      <workItem from="1598210031268" duration="623000" />
     </task>
     <task id="LOCAL-00001" summary="setting up node">
       <created>1598110713760</created>
@@ -174,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1598142904027</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="setting up node">
+      <created>1598201342483</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1598201342484</updated>
+    </task>
+    <task id="LOCAL-00009" summary="setting up node">
+      <created>1598201474052</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1598201474052</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
