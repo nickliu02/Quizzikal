@@ -81,16 +81,21 @@ export default {
                         ...form
                     })
                 .then(response => {
-                    localStorage.setItem('jwt',response.data.accessToken);
-                    localStorage.setItem('username', form.username)                   
-                    if (localStorage.getItem('jwt') != null){
-                        if(localStorage.getItem('nextUrl') != null){
-                            this.$router.push(localStorage.getItem('nextUrl'))
-                        }
-                        else{
-                            this.$router.push('Play')
+                    if (!response.data.hasOwnProperty('accessToken')) {
+                        //set local storage
+                        localStorage.setItem('jwt',response.data.accessToken);
+                        console.log(response.data.accessToken)
+                        localStorage.setItem('username', form.username)                   
+                        if (localStorage.getItem('jwt') != null){
+                            if(localStorage.getItem('nextUrl') != null){
+                                this.$router.push(localStorage.getItem('nextUrl'))
+                            }
+                            else{
+                                this.$router.push('Play')
+                            }
                         }
                     }
+                    
                     
                 
                 })
