@@ -137,7 +137,7 @@ export default {
 
                 {
                     username: localStorage.getItem('username'),
-                    id: '26'
+                    id: '29'
                       
                 },
                 {
@@ -157,7 +157,7 @@ export default {
         },
 
         async getAnswer() {
-            this.$axios.post(this.$API_URL+"/answer/submit", {
+            this.$axios.post(this.$API_URL+"/quiz/submit", {
                 headers: {
                     "x-access-token" : "",
                 }},
