@@ -22,7 +22,7 @@
                                         label="Login"
                                         name="login"
                                         prepend-icon="mdi-account"
-                                        hint="Dororo hentai"
+                                        color="success"
                                         type="text"
                                         maxlength="12"
                                         v-model="form.username"
@@ -33,7 +33,7 @@
                                         id="password"
                                         label="Password"
                                         name="password"
-                                        
+                                        color="success"
                                         prepend-icon="mdi-lock"
                                         v-model="form.password"
                                         type="password"

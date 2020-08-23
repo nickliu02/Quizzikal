@@ -21,29 +21,32 @@
                                     <v-text-field
                                         label="Username"
                                         name="username"
+                                        color="success"
                                         
                                         prepend-icon="mdi-account"
-                                        hint="Dororo hentai"
+                          
                                         type="text"
-                                        maxlength="25"
+                                        maxlength="12"
                                         counter
                                         v-model="form.username"
-                                        :rules="[rules.required, rules.min, rules.max]"
+                                        :rules="[rules.required, rules.min2, rules.max]"
                                     >
                                     </v-text-field>
                                     <v-text-field
+                                      color="success"
                                         label="Name"
                                         name="name"
                                         
                                         prepend-icon="mdi-form-textbox"
                                         type="text"
-                                        maxlength="25"
+                                        maxlength="12"
                                         counter
                                         v-model="form.name"
-                                        :rules="[rules.required, rules.min]"
+                                        :rules="[rules.required, rules.min2]"
                                     >
                                     </v-text-field>
                                     <v-text-field
+                                        color="success"
                                         id="password"
                                         label="Password"
                                         name="password"
@@ -59,16 +62,16 @@
                                         id="passwordconfirm"
                                         label="Confirm Password"
                                         name="passwordconfirm"
-                                        
-                                        maxlength="12"
+                                        color="success"
+                                        maxlength="25"
                                         counter
                                         prepend-icon="mdi-lock"
                                         v-model="form.otherpass"
                                         type="password"
-                                        :rules="[rules.required, rules.min, (form.otherpass === form.password) || 'Password must match']"
+                                        :rules="[rules.required, rules.min, rules.match]"
                                     ></v-text-field>
 
-                                    <v-btn color="secondary" @click="onRegister">Register</v-btn>
+                                    <v-btn color="accent" @click="onRegister">Register</v-btn>
 
                                 </v-form>
                             </v-card-text>
@@ -98,7 +101,9 @@ export default {
             },
             rules: {
               required: value => !!value || 'Required.',
-              min: val => val.length >= 8 || 'Min 8 characters'
+              min: val => val.length >= 8 || 'Min 8 characters',
+              min2: val => val.length >= 3 || 'Min 3 characters',
+              match: val => val === this.form.password || 'Password must match'
 
               
             }
