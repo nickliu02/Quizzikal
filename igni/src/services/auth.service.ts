@@ -1,33 +1,22 @@
 import { client } from './database.service';
 const jwt = require('jsonwebtoken');
-export const register_user = (username: string, password: string) => client.query(
+
+export const register_user = (username: string, password: string): Promise<string> => client.query(
     'INSERT INTO users(username, password) VALUES($1, $2)',
     [username, password]
 )
-    .then(res => console.log(res))
-    .catch(e => console.log(e));
+    .then(res => generateToken(res.rows[0].username))
+    .catch(e => e);
 
-export const authenticate_user = (username: string, password: string) => client.query(
+export const authenticate_user = (username: string, password: string): Promise<string> => client.query(
     'SELECT * FROM users WHERE username = $1 AND password = $2',
     [username, password]
 )
-    .then(res => {
-        const token = jwt.sign({
-                username:res.rows[0].username
-            },
-            process.env.JWT_KEY,
-            {
-                expiresIn:"1h"
-            });
-        return token;
-    })
-    .catch(e => console.log(e));
+    .then(res => generateToken(res.rows[0].username))
+    .catch(e => e);
 
-
-// export const get_user_id_from_name = (username: string) => client.query(
-
-// )
-
-// export const get_user_profile = (id: number) => client.query(
-
-// )
+export const generateToken = (username: string): string => jwt.sign(
+    { username: username },
+    process.env.JWT_KEY,
+    { expiresIn:"1h" }
+);

@@ -121,8 +121,10 @@ export default {
                           ...form
                       })
               .then(response => {
-                  localStorage.setItem('jwt',response.data.token)
-                  if (localStorage.getItem('jwt') != null){
+                  localStorage.setItem('jwt',response.data.accessToken)
+                  console.log(response.data.accessToken)
+                  localStorage.setItem('username', form.username) 
+                  if (localStorage.getItem('jwt') !=null){
                     
                     this.$router.push('Play')
                   

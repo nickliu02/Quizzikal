@@ -419,15 +419,18 @@ export default {
           categories.push(this.subjectIndex[i]);
         }
       }
-      
-      this.$axios.post(this.$API_URL+"/quiz/create/", {
-        headers:  {'x-access-token': localStorage.getItem('jwt') },
-        body: {
-          challenger_username: "poo",
+      console.log(localStorage.getItem('jwt'))
+      this.$axios.post(this.$API_URL+"/quiz/create/",
+        {
+          challenger_username: "pinosaur",
           challengee_username: "feces",
-          categories: categories
+          catagories: categories
+          
+        },
+        {
+        headers:  {'x-access-token': localStorage.getItem('jwt') }
         }
-      }).then((id) => {
+      ).then((id) => {
         console.log(id);
         this.getChallenges();
       }).catch((error) => {
