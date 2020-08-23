@@ -5,18 +5,21 @@ import { Catagory } from '../types/catagories';
 
 export const quizRouter = express.Router();
 
-quizRouter.post('/create', (req,res) => {
+quizRouter.post('/create', async (req,res) => {
 
     const body: { challenger_username: string, challengee_username: string, catagories: Catagory[] } = req.body;
 
-    //find questions based on catagories given
-    const question_ids: string = get_questions_of_catagory(body.catagories)
-        //fix dis !!
+    // find questions based on catagories given
+    const question_ids = await get_questions_of_catagory(body.catagories);
+
+    const string_ids: string = question_ids
         .map((row: {question_id: number}) => row.question_id)
         .join(',');
 
-    const result = create_quiz(body.challenger_username,body.challengee_username,question_ids);
-    res.send(result);
+    const string_catagories = body.catagories.join(',');
+
+    const quiz_id = create_quiz(body.challenger_username,body.challengee_username,string_ids,string_catagories);
+    res.send(quiz_id);
 
 });
 
