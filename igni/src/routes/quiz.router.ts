@@ -8,22 +8,24 @@ import {check_auth} from "./middleware/check-auth";
 
 export const quizRouter = express.Router();
 
-quizRouter.post('/create', check_auth, async (req: Request<{},{},QuizCreateRequest>,res,next) => {
+quizRouter.post('/create', check_auth, async (req,res,next) => {
+
+    const body: QuizCreateRequest = req.body;
 
     //catches problems
-    if (req.body.catagories.length == 0) { next(new Error('No quiz catagories provided')); }
+    if (body.catagories.length == 0) { next(new Error('No quiz catagories provided')); }
 
     // find questions based on catagories given
-    const question_ids = await get_questions_of_catagory(req.body.catagories); 
+    const question_ids = await get_questions_of_catagory(body.catagories); 
+    
     const string_ids: string = question_ids
         .map((row: {question_id: number}) => row.question_id)
         .join(',');
 
-    const string_catagories = req.body.catagories.join(',');
+    const string_catagories = body.catagories.join(',');
 
-    const quiz_id = await create_quiz(req.body.challenger_username,req.body.challengee_username,string_ids,string_catagories);
+    const quiz_id = await create_quiz(body.challenger_username,body.challengee_username,string_ids,string_catagories);
     res.send({...quiz_id});
-
 
 });
 

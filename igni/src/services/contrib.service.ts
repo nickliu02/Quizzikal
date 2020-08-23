@@ -6,4 +6,4 @@ export const create_question = (text: string, correct: string, wrong: string[], 
     [text, correct, wrong.join(','), catagory]
 )
     .then(res => res)
-    .catch(e => e);
+    .catch(e => { console.log(e); return e; } );
