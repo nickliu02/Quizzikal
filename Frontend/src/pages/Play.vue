@@ -9,7 +9,7 @@
           </div>
 
           <div>
-            <v-btn depressed x-large color="white">Solo Play</v-btn>
+            <v-btn depressed x-large color="white" @click.stop="isSoloModalOpen = true">Solo Play</v-btn>
           </div>
           
         </div>
@@ -273,6 +273,42 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <v-dialog
+          v-model="isSoloModalOpen"
+          max-width="300"
+        >
+
+          <v-card id="soloModal">
+            <div style="text-align: center">
+              <v-btn
+                text
+                @click="isSoloModalOpen = false"
+                :to="'/quiz'"
+                width="300"
+                x-large
+              >
+                  New Game
+              </v-btn>
+            </div>
+              
+          
+
+            <div style="text-align: center">
+              <v-btn
+                text
+                @click="isSoloModalOpen = false"
+                :to="'/quiz'"
+                width="300"
+                x-large
+              >
+                  Practice Missed Questions
+              </v-btn>
+            </div>
+              
+            
+          </v-card>
+        </v-dialog>
     </v-app>    
 
   
@@ -334,6 +370,9 @@ export default {
 
       isNewChallengeModalOpen: false,
       selectedSubjects: [false, false, false, false, false],
+
+      isSoloModalOpen: false,
+      
 
       opponentUsername: "",
     }
@@ -438,6 +477,11 @@ v-tooltip {
 .yellow {
   background-color: lightyellow;
   text-align: center;
+}
+
+#soloModal v-btn {
+  text-align: center;
+  margin: 10px auto;
 }
 
 </style>

@@ -28,7 +28,6 @@ quizRouter.get('/next', async (req,res) => {
     const body: { username: string, quiz_id: number } = req.body;
 
     const quiz = await get_quiz(body.quiz_id);
-    console.log(quiz);
 
     //count how many questions user has answered
     var results = '';
@@ -41,15 +40,26 @@ quizRouter.get('/next', async (req,res) => {
         return;
     }
     
-    console.log(results);
-
     //map to corresponding quiz_id
     const question_index = results.split(',').length - 1;
     const current_question_id = parseInt(quiz.question_ids.split(',')[question_index]);
 
     //choose right and wrong answers and send to client
     const current_question = await get_question(current_question_id);
-    console.log(current_question);
+
+    const question = {
+        text: current_question.text,
+        choices: [
+            current_question.correct,
+            ...current_question.wrong
+                .split(',')
+                .sort(() => Math.random()-0.5)
+                .slice(2),
+        ].sort(() => Math.random()-0.5)
+    }
+
+    console.log(question);
+    res.send(question);
 
 });
 
