@@ -129,19 +129,20 @@ export default {
     },
 
     methods: {
-        getQuestion() {
+        async getQuestion() {
             console.log("requesting questions")
             console.log(localStorage.getItem('jwt'))
             this.$axios.post(this.$API_URL+"/quiz/next",
-                {
-                    headers: {'x-access-token': localStorage.getItem('jwt') }
-
-                },
+ 
 
                 {
                     username: localStorage.getItem('username'),
                     id: '26'
                       
+                },
+                {
+                    headers: {'x-access-token': localStorage.getItem('jwt') }
+
                 },
 
                 
@@ -162,7 +163,7 @@ export default {
                 }},
                 
                 {
-                    id: '26', 
+                    quiz_id: '29', 
                     username: localStorage.getItem('username'),
                     question: this.question
                 
@@ -176,11 +177,13 @@ export default {
             if (this.selected==="") {
                 this.selected = choice;
 
-                /*this.correct = await this.getAnswer()
+                this.correct = this.getAnswer()
                 .then((answer) => {
                     this.correct = answer;
                 }).catch(error => console.log(error))
-                .finally(
+                .finally(() => {
+                    clearInterval(this.timer);
+                    this.remainingTime = this.maxTime;
                     setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
@@ -190,13 +193,13 @@ export default {
                         else {
                             this.goToResultsScreen();
                         }
+                    }, 2000)
 
-                    }, 2000));*/
+                });
 
-                clearInterval(this.timer);
-                this.remainingTime = this.maxTime;
                 
-                setTimeout(() => { 
+                
+                /*setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
                             this.numQuestion++;
@@ -208,7 +211,7 @@ export default {
                             
                         }
                     }, 1000   
-                )
+                )*/
                 
             }
             
