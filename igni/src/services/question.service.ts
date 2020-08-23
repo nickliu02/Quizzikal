@@ -3,7 +3,7 @@ import { Catagory } from '../types/catagories';
 
 const QUIZ_BATCH_SIZE = 6;
 
-export const get_questions_of_catagory = (catagories: Catagory[]) => client.query(
+export const get_questions_of_catagory = (catagories: Catagory[]): Promise<{question_id: number}[]> => client.query(
     `SELECT question_id FROM questions WHERE  
     ${
         catagories.map((c: Catagory) => `catagory = '${c}'`)
@@ -12,10 +12,12 @@ export const get_questions_of_catagory = (catagories: Catagory[]) => client.quer
     ORDER BY RANDOM() LIMIT $1`,
     [QUIZ_BATCH_SIZE]
 )
-    .then(res => console.log(res.rows))
-    .catch(e => console.log(e));
+    .then(res => res.rows)
+    .catch(e => e);
 
 export const get_question = (question_id: number) => client.query(
     'SELECT * FROM questions WHERE id = $1',
     [question_id]
-);
+)
+    .then(res => res.rows)
+    .catch(e => e);
