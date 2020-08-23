@@ -20,5 +20,5 @@ export const authenticate_user = (username: string, password: string): Promise<s
 export const generateToken = (username: string): string => jwt.sign(
     { username: username },
     jwtKey,
-    { expiresIn: "1h" }
+    { expiresIn: "24h" }
 );
