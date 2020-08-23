@@ -1,5 +1,6 @@
 import { client } from './database.service';
 import { Catagory } from '../types/catagories';
+import { Question } from '../types/catagories';
 
 const QUIZ_BATCH_SIZE = 6;
 
@@ -15,7 +16,7 @@ export const get_questions_of_catagory = (catagories: Catagory[]): Promise<{ques
     .then(res => res.rows)
     .catch(e => e);
 
-export const get_question = (question_id: number) => client.query(
+export const get_question = (question_id: number): Promise<Question> => client.query(
     'SELECT * FROM questions WHERE question_id = $1',
     [question_id]
 )

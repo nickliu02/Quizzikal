@@ -1,7 +1,8 @@
 import express from 'express';
-import { create_quiz, get_quiz } from '../services/quiz.service';
+import { create_quiz, get_quiz, add_result, is_challenger, get_current_question_id } from '../services/quiz.service';
 import { get_questions_of_catagory, get_question } from '../services/question.service';
 import { Catagory } from '../types/catagories';
+import { Question } from '../types/database.types';
 
 export const quizRouter = express.Router();
 
@@ -29,20 +30,12 @@ quizRouter.get('/next', async (req,res) => {
 
     const quiz = await get_quiz(body.quiz_id);
 
+    //TODO: some sort of auth quiz function just to check if user is acutally in quiz and tehre are still questions to do
     //count how many questions user has answered
-    var results = '';
-    if (quiz.challenger_username == body.username) {
-        results = quiz.challenger_results;
-    } else if (quiz.challengee_username == body.username) {
-        results = quiz.challengee_results;
-    } else {
-        res.send('You are not in this quiz');
-        return;
-    }
+    const challenger = is_challenger(body.username, quiz) 
     
     //map to corresponding quiz_id
-    const question_index = results.split(',').length - 1;
-    const current_question_id = parseInt(quiz.question_ids.split(',')[question_index]);
+    const current_question_id = get_current_question_id(challenger,quiz);
 
     //choose right and wrong answers and send to client
     const current_question = await get_question(current_question_id);
@@ -63,13 +56,27 @@ quizRouter.get('/next', async (req,res) => {
 
 });
 
-quizRouter.post('/submit', (req,res) => {
+quizRouter.post('/submit', async (req,res) => {
 
-    const { username, quiz_id, answer } = req.body;
+    const body: { username: string, quiz_id: number, answer: string } = req.body;
+
+    //make sure player is in quiz and there are still questions to do
+
+    const quiz = await get_quiz(body.quiz_id);
+
+    const challenger = is_challenger(body.username, quiz) 
+    const current_question_id = get_current_question_id(challenger,quiz);
+    const current_question: Question = await get_question(current_question_id);
 
     //first check to see if answer was corerct
+    if (current_question.correct = body.answer) {
+        //next update quiz to include this answer
+        add_result(body.username,challenger,body.quiz_id,1);
+    } else {
+        add_result(body.username,challenger,body.quiz_id,0);
+    }
 
-    //next update quiz to include this answer
+    //tell client the right answer
+    res.send({answer: current_question.correct});
 
-    //finally tell client if they got answer right or wrong
 });
