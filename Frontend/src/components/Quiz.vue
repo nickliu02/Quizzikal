@@ -130,23 +130,43 @@ export default {
 
     methods: {
         async getQuestion() {
-            this.$axios.post(this.$API_URL+"/question", {
-                headers: {
-                    "x-access-token" : "",
-                }
-            })
+            console.log("requesting questions")
+            console.log(localStorage.getItem('jwt'))
+            this.$axios.post(this.$API_URL+"/quiz/next",
+ 
+
+                {
+                    username: localStorage.getItem('username'),
+                    id: '29'
+                      
+                },
+                {
+                    headers: {'x-access-token': localStorage.getItem('jwt') }
+
+                },
+
+                
+                
+            )
             .then((result) => {
+                console.log(result);
                 this.question = result.data.question;
                 this.choices = result.data.choices;
-                this.category = result.data.category;
+                this.category = result.data.catagory;
             }).catch(error => console.log(error));
         },
 
         async getAnswer() {
-            this.$axios.post(this.$API_URL+"/answer", {
+            this.$axios.post(this.$API_URL+"/quiz/submit", {
                 headers: {
                     "x-access-token" : "",
-                }
+                }},
+                
+                {
+                    quiz_id: '29', 
+                    username: localStorage.getItem('username'),
+                    question: this.question
+                
             })
             .then((result) => {
                 result.data.answer;
@@ -157,11 +177,13 @@ export default {
             if (this.selected==="") {
                 this.selected = choice;
 
-                /*this.correct = await this.getAnswer()
+                this.correct = this.getAnswer()
                 .then((answer) => {
                     this.correct = answer;
                 }).catch(error => console.log(error))
-                .finally(
+                .finally(() => {
+                    clearInterval(this.timer);
+                    this.remainingTime = this.maxTime;
                     setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
@@ -171,13 +193,13 @@ export default {
                         else {
                             this.goToResultsScreen();
                         }
+                    }, 2000)
 
-                    }, 2000));*/
+                });
 
-                clearInterval(this.timer);
-                this.remainingTime = this.maxTime;
                 
-                setTimeout(() => { 
+                
+                /*setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
                             this.numQuestion++;
@@ -189,7 +211,7 @@ export default {
                             
                         }
                     }, 1000   
-                )
+                )*/
                 
             }
             
@@ -229,6 +251,7 @@ export default {
 
     mounted() {
         this.startTimer();
+        this.getQuestion();
     }
     
 }

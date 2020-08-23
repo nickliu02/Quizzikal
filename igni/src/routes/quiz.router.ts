@@ -1,4 +1,5 @@
-import express from 'express';
+import express, { Request } from 'express';
+import { QuizCreateRequest } from '../types/request.types';
 import { create_quiz, get_quiz, add_result, is_challenger, get_current_question_id } from '../services/quiz.service';
 import { get_questions_of_catagory, get_question } from '../services/question.service';
 import { Catagory } from '../types/catagories';
@@ -7,21 +8,22 @@ import {check_auth} from "./middleware/check-auth";
 
 export const quizRouter = express.Router();
 
-quizRouter.post('/create', check_auth, async (req,res) => {
+quizRouter.post('/create', check_auth, async (req: Request<{},{},QuizCreateRequest>,res,next) => {
 
-    const body: { challenger_username: string, challengee_username: string, catagories: Catagory[] } = req.body;
+    //catches problems
+    if (req.body.catagories.length == 0) { next(new Error('No quiz catagories provided')); }
 
     // find questions based on catagories given
-    const question_ids = await get_questions_of_catagory(body.catagories);
-
+    const question_ids = await get_questions_of_catagory(req.body.catagories); 
     const string_ids: string = question_ids
         .map((row: {question_id: number}) => row.question_id)
         .join(',');
 
-    const string_catagories = body.catagories.join(',');
+    const string_catagories = req.body.catagories.join(',');
 
-    const quiz_id = await create_quiz(body.challenger_username,body.challengee_username,string_ids,string_catagories);
-    res.send(...quiz_id);
+    const quiz_id = await create_quiz(req.body.challenger_username,req.body.challengee_username,string_ids,string_catagories);
+    res.send({...quiz_id});
+
 
 });
 
@@ -49,11 +51,11 @@ quizRouter.get('/next', check_auth, async (req,res) => {
             ...current_question.wrong
                 .split(',')
                 .sort(() => Math.random()-0.5)
-                .slice(2),
-        ].sort(() => Math.random()-0.5)
+                .slice(0,3),
+        ].sort(() => Math.random()-0.5),
+        catagory: current_question.catagory
     }
 
-    console.log(question);
     res.send(question);
 
 });

@@ -1,7 +1,9 @@
 import { client } from './database.service';
+import { Catagory } from '../types/catagories';
 
-export const create_question = (question:string,answer:string,wrong_answers:[string]) => client.query(
-    'INSERT INTO questions (text,answer,wrong) VALUES ($1,$2,$3)',
-    [question,answer,wrong_answers.toString()]
+export const create_question = (text: string, correct: string, wrong: string[], catagory: Catagory) => client.query(
+    'INSERT INTO questions (text,answer,wrong,catagory) VALUES ($1,$2,$3,$4)',
+    [text, correct, wrong.join(','), catagory]
 )
-
+    .then(res => res)
+    .catch(e => e);

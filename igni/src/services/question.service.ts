@@ -14,11 +14,11 @@ export const get_questions_of_catagory = (catagories: Catagory[]): Promise<{ques
     [QUIZ_BATCH_SIZE]
 )
     .then(res => res.rows)
-    .catch(e => e);
+    .catch(e => { console.log(e); return e; } );
 
 export const get_question = (question_id: number): Promise<Question> => client.query(
     'SELECT * FROM questions WHERE question_id = $1',
     [question_id]
 )
     .then(res => res.rows[0])
-    .catch(e => e);
+    .catch(e => { console.log(e); return e; } );
