@@ -16,7 +16,7 @@ export const get_questions_of_catagory = (catagories: Catagory[]): Promise<{ques
     .catch(e => e);
 
 export const get_question = (question_id: number) => client.query(
-    'SELECT * FROM questions WHERE id = $1',
+    'SELECT * FROM questions WHERE question_id = $1',
     [question_id]
 )
     .then(res => res.rows)
