@@ -35,7 +35,7 @@ let router = new Router({
     }},
 
   ],
-  
+  mode: "history",
 });
 
 router.beforeEach((to, from, next) => {

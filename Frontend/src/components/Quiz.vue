@@ -137,7 +137,7 @@ export default {
 
                 {
                     username: localStorage.getItem('username'),
-                    quiz_id: 40
+                    quiz_id: 43
                       
                 },
                 {
@@ -164,7 +164,7 @@ export default {
 
                 this.$axios.post(this.$API_URL+"/quiz/submit", 
                 {
-                    quiz_id: 40, 
+                    quiz_id: 43, 
                     username: localStorage.getItem('username'),
                     answer: this.selected
                 },
@@ -220,10 +220,17 @@ export default {
 
         getColor(choice) {
             //console.log(choice, this.correct, this.selected)
+            let match = false;
+            for (let i = 0; i < 4; i++) {
+                if(this.choices[i] === this.correct) {
+                    match = true;
+                }
+            }
+
             if (choice===this.correct && this.selected.length > 0) {
                 return 'green';
             }
-            else if (choice===this.selected || this.selected==='out of time') {
+            else if (match && (choice===this.selected || this.selected==='out of time')) {
                 return 'red';
             }
             return 'normal';
