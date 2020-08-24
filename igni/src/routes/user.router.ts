@@ -5,15 +5,13 @@ import {check_auth} from "./middleware/check-auth";
 import { get_user_quizzes } from '../services/quiz.service';
 import { Quiz } from '../types/database.types';
 import { QUESTION_BATCH } from '../game_config';
-import { captureRejectionSymbol } from 'events';
 
 export const userRouter = express.Router();
 
 
-userRouter.get('/profile', check_auth, (req,res) => {
+userRouter.get('/profile', check_auth, (req: any,res: any) => {
 
-    const { username } = req.body;
-
+    const username = req.userData.username;
     const result = get_profile(username);
     res.send(result);
 });

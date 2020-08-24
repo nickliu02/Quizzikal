@@ -5,11 +5,11 @@ export const authRouter = express.Router();
 
 authRouter.post('/register', async (req,res) => {
 
-    const { username, password } = req.body;
+    const { username, password, real_name } = req.body;
 
     //check that username isnt already registered
 
-    const token = await register_user(username, password);
+    const token = await register_user(username, password, real_name);
 
     res.send({accessToken: token});
 

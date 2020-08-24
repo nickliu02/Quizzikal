@@ -76,7 +76,7 @@ quizRouter.post('/submit', check_auth, async (req,res) => {
     const current_question: Question = await get_question(current_question_id);
 
     //first check to see if answer was corerct
-    if (current_question.correct = body.answer) {
+    if (current_question.correct == body.answer) {
         //next update quiz to include this answer
         add_result(body.username,challenger,body.quiz_id,1);
     } else {
@@ -86,4 +86,21 @@ quizRouter.post('/submit', check_auth, async (req,res) => {
     //tell client the right answer
     res.send({answer: current_question.correct});
 
+});
+
+quizRouter.post('/results', check_auth, async (req: any, res: any) => {
+
+    const body: { quiz_id: number } = req.body;
+
+    const quiz = await get_quiz(body.quiz_id);
+    const username = req.userData.username;
+
+    const results = is_challenger(username, quiz) ? quiz.challenger_results : quiz.challengee_results;
+    
+    const score = results
+        .split(',')
+        .filter((result: string) => result === '1')
+        .length;
+
+    res.send({score});
 });
