@@ -1,1 +1,1 @@
-export const QUESTION_BATCH = 7;
+export const QUESTION_BATCH = 6;

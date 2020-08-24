@@ -5,6 +5,7 @@ import {check_auth} from "./middleware/check-auth";
 import { get_user_quizzes } from '../services/quiz.service';
 import { Quiz } from '../types/database.types';
 import { QUESTION_BATCH } from '../game_config';
+import { captureRejectionSymbol } from 'events';
 
 export const userRouter = express.Router();
 
@@ -35,11 +36,18 @@ userRouter.get('/games', check_auth, async (req: any, res: any) => {
         .filter((quiz: Quiz) => (quiz.challengee_username == username || quiz.challenger_username == username))
         .filter((quiz: Quiz) => {
 
+            const challenger = is_challenger(username, quiz);
 
             const challenger_count = quiz.challenger_results.split(',').length-1;
             const challengee_count = quiz.challengee_results.split(',').length-1;
 
-            return (0<challenger_count && challenger_count<=QUESTION_BATCH) || (0<challengee_count && challengee_count<=QUESTION_BATCH) && (challenger_count!=QUESTION_BATCH && challengee_count!=QUESTION_BATCH); 
+            if (challenger) {
+                return (0<=challenger_count && challenger_count<=QUESTION_BATCH) && (0<=challengee_count && challengee_count<=QUESTION_BATCH) && !(challenger_count==QUESTION_BATCH&&challengee_count==QUESTION_BATCH);
+            } else {
+                return (0<challengee_count && challengee_count<=QUESTION_BATCH) && (0<=challenger_count && challenger_count<=QUESTION_BATCH) 
+
+            }
+
         })
         .map((quiz: Quiz) => ({
             quiz_id: quiz.quiz_id,
