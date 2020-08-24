@@ -131,8 +131,7 @@ export default {
 
     methods: {
         async getQuestion() {
-            console.log("requesting questions")
-            console.log(localStorage.getItem('jwt'))
+            
             this.$axios.post(this.$API_URL+"/quiz/next",
 
                 {
@@ -176,7 +175,7 @@ export default {
             .then((result) => {
                 
                  this.correct = result.data.answer;
-                    console.log(result.data.answer+"daniel")
+                    console.log(result.data.answer)
         
                     clearInterval(this.timer);
                     this.remainingTime = this.maxTime;
@@ -187,6 +186,8 @@ export default {
                             this.numQuestion++;
                             this.startTimer();
                             this.getQuestion();
+                            this.correct = '';
+                            this.selected = '';
                         }
                         else {
                             this.goToResultsScreen();

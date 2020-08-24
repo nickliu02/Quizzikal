@@ -182,8 +182,9 @@
                 <v-btn
                   color="green darken-1"
                   text
-                  @click="isChallengeModalOpen = false"
-                  :to="'/quiz'"
+                  @click="isChallengeModalOpen = false
+                  $router.push({ name: 'Quiz', params: { numAnswered: ongoingModalInfo.progress, 
+                id: ongoingModalInfo.quiz_id } })"
                 >
                     Accept
                 </v-btn>
