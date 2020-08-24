@@ -182,8 +182,9 @@
                 <v-btn
                   color="green darken-1"
                   text
-                  @click="isChallengeModalOpen = false"
-                  :to="'/quiz'"
+                  @click="isChallengeModalOpen = false
+                  $router.push({ name: 'Quiz', params: { numAnswered: ongoingModalInfo.progress, 
+                id: ongoingModalInfo.quiz_id } })"
                 >
                     Accept
                 </v-btn>
@@ -234,7 +235,7 @@
               <v-btn
                 color="green darken-1"
                 text
-                @click="isNewChallengeModalOpen = false; createGame(opponentUsername); resetTextField();"
+                @click="isNewChallengeModalOpen = false; createGame(opponentUsername); resetTextField(); getChallenges();"
                 
               >
                   Send!
@@ -328,32 +329,15 @@ export default {
     return {
       // categories: [Biology, Chemistry, Physics, Math, English, History]
       challenges: [
-        { player: "a", categories: [true, false, true, false, false, false] },
-        { player: "wgher", categories: [false, false, true, false, false, true] },
-        { player: "tehth", categories: [true, false, true, false, false, false] },
-        { player: "rv4tw", categories: [false, false, true, false, false, true] },
-        { player: "zhavt4", categories: [true, false, true, false, false, false] },
-        { player: "12avt4345", categories: [false, false, true, false, false, true] },
+    
       ],
 
       ongoingChallenges: [
-        { player: "awgeew", numAnswered: "5", id: 40 },
-        { player: "wgher", numAnswered: "6" },
-        { player: "srhdsrd", numAnswered: "1" },
-        { player: "rhxeh", numAnswered: "4" },
-        { player: "zhdrhwh", numAnswered: "3" },
-        { player: "12345", numAnswered: "3" },
+        
       ],
 
       completedChallenges: [
-        { player: "6558", pc: "3", oc: "2" },
-        { player: "wgrher", pc: "5", oc: "2" },
-        { player: "sr5ysrd", pc: "3", oc: "6" },
-        { player: "rhx567h4eh", pc: "2", oc: "2" },
-        { player: "z854hwh", pc: "3", oc: "2" },
-        { player: "12g645", pc: "3", oc: "2" },
-        { player: "z854hwh", pc: "3", oc: "2" },
-        { player: "12g645", pc: "3", oc: "2" },
+       
       ],
 
       subjects: [

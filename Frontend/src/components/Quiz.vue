@@ -40,7 +40,7 @@
                                 @click="selectOption(choice)"
                             >
                                 <v-btn width="320" height="100" v-bind:color="btnColors[getColor(choice)]">
-                                    <h4>{{ choice }}</h4>
+                                    <div ><p :style="{'padding': '1px','overflow-wrap':'normal'}">{{ choice }}</p></div>
                                 </v-btn>
                             </li>
                         </ul>
@@ -131,8 +131,7 @@ export default {
 
     methods: {
         async getQuestion() {
-            console.log("requesting questions")
-            console.log(localStorage.getItem('jwt'))
+            
             this.$axios.post(this.$API_URL+"/quiz/next",
 
                 {
@@ -166,7 +165,7 @@ export default {
                 {
                     quiz_id: this.id, 
                     username: localStorage.getItem('username'),
-                    answer: this.selected
+                    answer: choice
                 },
                 {
                     headers: {
@@ -174,9 +173,9 @@ export default {
                 }},
             )
             .then((result) => {
-                console.log("gtethoiethoith"+result.data.answer)
+                
                  this.correct = result.data.answer;
-                    console.log(result.data.answer+"daniel")
+                    console.log(result.data.answer)
         
                     clearInterval(this.timer);
                     this.remainingTime = this.maxTime;
@@ -186,6 +185,9 @@ export default {
                         if (this.numQuestion < 6) {
                             this.numQuestion++;
                             this.startTimer();
+                            this.getQuestion();
+                            this.correct = '';
+                            this.selected = '';
                         }
                         else {
                             this.goToResultsScreen();
@@ -222,12 +224,13 @@ export default {
             //console.log(choice, this.correct, this.selected)
             let match = false;
             for (let i = 0; i < 4; i++) {
-                if(this.choices[i] === this.correct) {
+                if( this.choices[i] === this.correct) {
                     match = true;
                 }
             }
-
-            if (choice===this.correct && this.selected.length > 0) {
+            //console.log(choice, this.correct)
+            
+            if (choice===this.correct && this.selected.length > 0 && match) {
                 return 'green';
             }
             else if (match && (choice===this.selected || this.selected==='out of time')) {
@@ -318,6 +321,10 @@ h3 {
 
 #question {
     height: 130px
+}
+
+#card div {
+    overflow-wrap: break-word
 }
 
 </style>
