@@ -20,7 +20,7 @@ export const get_quiz = (quiz_id: number): Promise<Quiz> => client.query(
     .then(res => res.rows[0])
     .catch(e => { console.log(e); return e; } );
 
-export const get_user_quizzes = (username: number): Promise<Quiz> => client.query(
+export const get_user_quizzes = (username: number): Promise<Quiz[]> => client.query(
     'SELECT * FROM quiz WHERE challenger_username = $1 OR challengee_username = $1',
     [username]
 )

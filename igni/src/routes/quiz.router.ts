@@ -13,7 +13,7 @@ quizRouter.post('/create', check_auth, async (req,res,next) => {
     const body: QuizCreateRequest = req.body;
 
     //catches problems
-    if (body.catagories.length == 0) { next(new Error('No quiz catagories provided')); }
+    if (body.catagories.length == 0) { next(new Error('No quiz catagories provided')); return; }
 
     // find questions based on catagories given
     const question_ids = await get_questions_of_catagory(body.catagories); 
@@ -29,7 +29,7 @@ quizRouter.post('/create', check_auth, async (req,res,next) => {
 
 });
 
-quizRouter.get('/next', check_auth, async (req,res) => {
+quizRouter.post('/next', check_auth, async (req,res) => {
 
     const body: { username: string, quiz_id: number } = req.body;
 
