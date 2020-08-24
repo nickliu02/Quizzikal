@@ -41,7 +41,7 @@
                     <v-list-item>
 
                       <v-list-item-content>
-                        <v-list-item-title>{{ item.player }}</v-list-item-title>
+                        <v-list-item-title>{{ item.opponent_username }}</v-list-item-title>
                         
                       </v-list-item-content>
 
@@ -85,7 +85,7 @@
                       <v-list-item>
 
                         <v-list-item-content>
-                          <v-list-item-title>{{ item.player + ` ${item.numAnswered}/6` }}</v-list-item-title>
+                          <v-list-item-title>{{ item.opponent_username + ` ${item.progress}/6` }}</v-list-item-title>
                           
                         </v-list-item-content>
 
@@ -93,7 +93,7 @@
                           <v-btn
                             depressed
                             small
-                            v-if="item.numAnswered<6"
+                            v-if="item.progress<6"
                             @click.stop="openOngoingChallengeModal(item);"
                           >
                             Continue  
@@ -130,11 +130,11 @@
                     <v-list-item>
 
                       <v-list-item-content v-bind:class="{
-                          green: item.pc > item.oc,
-                          yellow: item.pc === item.oc,
-                          red: item.pc < item.oc
+                          green: item.your_score > item.opponent_score,
+                          yellow: item.your_score === item.opponent_score,
+                          red: item.your_score < item.opponent_score
                         }">
-                        <v-list-item-title>{{ `(${item.pc}/6) vs ${item.player} (${item.oc}/6)` }}</v-list-item-title>
+                        <v-list-item-title>{{ `(${item.your_score}/6) vs ${item.opponent_username} (${item.opponent_score}/6)` }}</v-list-item-title>
                         
                       </v-list-item-content>
 
@@ -267,8 +267,8 @@
                 color="green darken-1"
                 text
                 @click="isOngoingChallengeModalOpen = false
-                $router.push({ name: 'Quiz', params: { numAnswered: ongoingModalInfo.numAnswered, 
-                id: ongoingModalInfo.id } })
+                $router.push({ name: 'Quiz', params: { numAnswered: ongoingModalInfo.progress, 
+                id: ongoingModalInfo.quiz_id } })
                 "
               >
                   Continue
@@ -401,15 +401,16 @@ export default {
     },
 
     async getChallenges() {
-      const profile = this.$axios.get(this.$API_URL+"/games", {
+      const profile = this.$axios.get(this.$API_URL+"/user/games", {
         headers: {'x-access-token': localStorage.getItem('jwt') }},
         {
           username: localStorage.getItem("username"),
         }
       ).then((profile) => {
-        this.challenges = profile.data.incoming_matches,
-        this.ongoingChallenges = profile.data.pending_matches,
-        this.completedChallenges = profile.data.past_matches
+        console.log(profile.data)
+        this.challenges = profile.data.incoming,
+        this.ongoingChallenges = profile.data.outgoing,
+        this.completedChallenges = profile.data.done
       }).catch((error) => {
         console.log(error);
       });
@@ -445,7 +446,7 @@ export default {
   },
 
   mounted() {
-    //this.getChallenges();
+    this.getChallenges();
   }
 }
 </script>
