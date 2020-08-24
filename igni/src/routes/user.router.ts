@@ -34,17 +34,19 @@ userRouter.get('/games', check_auth, async (req: any, res: any) => {
     const outgoing = quizzes
         .filter((quiz: Quiz) => (quiz.challengee_username == username || quiz.challenger_username == username))
         .filter((quiz: Quiz) => {
+
+
             const challenger_count = quiz.challenger_results.split(',').length-1;
             const challengee_count = quiz.challengee_results.split(',').length-1;
 
-            return 0<challenger_count && challenger_count<QUESTION_BATCH && 0<challengee_count && challengee_count<QUESTION_BATCH; 
+            return (0<challenger_count && challenger_count<=QUESTION_BATCH) || (0<challengee_count && challengee_count<=QUESTION_BATCH) && (challenger_count!=QUESTION_BATCH && challengee_count!=QUESTION_BATCH); 
         })
         .map((quiz: Quiz) => ({
             quiz_id: quiz.quiz_id,
             opponent_username: is_challenger(username, quiz) ? quiz.challengee_username : quiz.challenger_username,
             progress: (function() {
                 const results = is_challenger(username, quiz) ? quiz.challenger_results : quiz.challengee_results;
-                return results.length-1;
+                return Math.max(0,results.split(',').length-1);
             })()
         }));
 
