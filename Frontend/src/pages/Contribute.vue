@@ -8,7 +8,7 @@
         
         <v-form>
             <v-text-field
-                v-model="form.question"
+                v-model="form.text"
                 :counter="120"
                 label="Question"
                 required
@@ -94,7 +94,7 @@ export default {
     data() {
         return {
             form : {
-                question: '',
+                text: '',
                 correct: '',
                 wrong: ['','',''],
                 catagory: ''
@@ -114,7 +114,7 @@ export default {
             })
             .then(response => {
                 if (response.data.message === "Success"){
-                    this.form.question = "";
+                    this.form.text = "";
                     this.form.correct = '';
                     this.form.wrong = ['','','']
                     this.form.catagory = '';
