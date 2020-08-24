@@ -13,7 +13,7 @@
       <v-card-title>User: {{profile.username}}</v-card-title>
 
       <v-card-text>
-        Name: {{profile.name}}
+        Name: {{profile.real_name}}
       </v-card-text>
 
       <v-divider class="mx-4"></v-divider>
@@ -64,7 +64,7 @@ export default {
     },
     mounted: function(){
       console.log("lmao")
-      this.$axios.get(this.$API_URL+"/profile",
+      this.$axios.get(this.$API_URL+"/user/profile",
         {
         headers: {
           'x-access-token': localStorage.getItem('jwt')
