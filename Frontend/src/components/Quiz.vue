@@ -137,7 +137,7 @@ export default {
 
                 {
                     username: localStorage.getItem('username'),
-                    quiz_id: this.id
+                    quiz_id: 40
                       
                 },
                 {
@@ -164,7 +164,7 @@ export default {
 
                 this.$axios.post(this.$API_URL+"/quiz/submit", 
                 {
-                    quiz_id: this.id, 
+                    quiz_id: 40, 
                     username: localStorage.getItem('username'),
                     answer: this.selected
                 },
