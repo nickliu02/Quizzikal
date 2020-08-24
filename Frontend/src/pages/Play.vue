@@ -93,6 +93,7 @@
                           <v-btn
                             depressed
                             small
+                            v-if="item.numAnswered<6"
                             @click.stop="openOngoingChallengeModal(item);"
                           >
                             Continue  
@@ -337,7 +338,7 @@ export default {
 
       ongoingChallenges: [
         { player: "awgeew", numAnswered: "5", id: 40 },
-        { player: "wgher", numAnswered: "2" },
+        { player: "wgher", numAnswered: "6" },
         { player: "srhdsrd", numAnswered: "1" },
         { player: "rhxeh", numAnswered: "4" },
         { player: "zhdrhwh", numAnswered: "3" },
