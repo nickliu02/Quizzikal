@@ -93,7 +93,7 @@
                           <v-btn
                             depressed
                             small
-                            @click.stop="openOngoingChallengeModal(item)"
+                            @click.stop="openOngoingChallengeModal(item);"
                           >
                             Continue  
                           </v-btn>
@@ -265,8 +265,10 @@
               <v-btn
                 color="green darken-1"
                 text
-                @click="isOngoingChallengeModalOpen = false"
-                :to="'/quiz'"
+                @click="isOngoingChallengeModalOpen = false
+                $router.push({ name: 'Quiz', params: { numAnswered: ongoingModalInfo.numAnswered, 
+                id: ongoingModalInfo.id } })
+                "
               >
                   Continue
               </v-btn>
@@ -334,7 +336,7 @@ export default {
       ],
 
       ongoingChallenges: [
-        { player: "awgeew", numAnswered: "5" },
+        { player: "awgeew", numAnswered: "5", id: 40 },
         { player: "wgher", numAnswered: "2" },
         { player: "srhdsrd", numAnswered: "1" },
         { player: "rhxeh", numAnswered: "4" },
@@ -398,7 +400,7 @@ export default {
     },
 
     async getChallenges() {
-      const profile = this.$axios.get(this.$API_URL+"/user/profile/", {
+      const profile = this.$axios.get(this.$API_URL+"/games", {
         headers: {'x-access-token': localStorage.getItem('jwt') }},
         {
           username: localStorage.getItem("username"),
@@ -442,7 +444,7 @@ export default {
   },
 
   mounted() {
-    this.getChallenges();
+    //this.getChallenges();
   }
 }
 </script>

@@ -87,27 +87,27 @@ export default {
     data() {
         return {
             numQuestion: 1,
-            question: "The 25 integers from -10 to 14, inclusive, can be arranged to form a 5-by-5 square in which the sum of the numbers in each row, the sum of the numbers in each column, and the sum of the numbers along each of the main diagonals are all the same. What is the value of this common sum?",
-            choices: ["2", "5", "10", "25"],
+            question: "",
+            choices: [],
             category: "history",
 
             icons: {
-                'biology': mdiDna,
-                'chemistry': mdiFlask,
-                'physics': mdiAtom,
-                'math': mdiMathIntegralBox,
-                'english': mdiBookOpenBlankVariant,
-                'history': mdiPillar
+                'BIOLOGY': mdiDna,
+                'CHEMISTRY': mdiFlask,
+                'PHYSICS': mdiAtom,
+                'MATH': mdiMathIntegralBox,
+                'ENGLISH': mdiBookOpenBlankVariant,
+                'HISTORY': mdiPillar
 
             },
 
             colors: {
-                'biology': '#26890c',
-                'chemistry': '#1368ce',
-                'physics': '#46178f',
-                'math': '#25076b',
-                'english': '#eea500',
-                'history': '#572817',
+                'BIOLOGY': '#26890c',
+                'CHEMISTRY': '#1368ce',
+                'PHYSICS': '#46178f',
+                'MATH': '#25076b',
+                'ENGLISH': '#eea500',
+                'HISTORY': '#572817',
                 '' : '#fff'
             },
 
@@ -117,13 +117,14 @@ export default {
                 'green': 'green'
             },
 
-            correct: "10",
+            correct: "",
             selected: "",
             ongoing: true,
             correctAnswers: 0,
-            remainingTime: 5000,
-            maxTime: 5000,
-            timer: null
+            remainingTime: 150000,
+            maxTime: 150000,
+            timer: null,
+            id: -1,
         }
         
     },
@@ -133,57 +134,53 @@ export default {
             console.log("requesting questions")
             console.log(localStorage.getItem('jwt'))
             this.$axios.post(this.$API_URL+"/quiz/next",
- 
 
                 {
                     username: localStorage.getItem('username'),
-                    id: '29'
+                    quiz_id: this.id
                       
                 },
                 {
                     headers: {'x-access-token': localStorage.getItem('jwt') }
 
                 },
-
-                
                 
             )
             .then((result) => {
-                console.log(result);
-                this.question = result.data.question;
+                this.question = result.data.text;
                 this.choices = result.data.choices;
                 this.category = result.data.catagory;
             }).catch(error => console.log(error));
         },
 
         async getAnswer() {
-            this.$axios.post(this.$API_URL+"/quiz/submit", {
-                headers: {
-                    "x-access-token" : "",
-                }},
-                
-                {
-                    quiz_id: '29', 
-                    username: localStorage.getItem('username'),
-                    question: this.question
-                
-            })
-            .then((result) => {
-                result.data.answer;
-            }).catch(error => console.log(error));
+            
         },
 
+        
         async selectOption(choice) {
             if (this.selected==="") {
                 this.selected = choice;
 
-                this.correct = this.getAnswer()
-                .then((answer) => {
-                    this.correct = answer;
-                }).catch(error => console.log(error))
-                .finally(() => {
+                this.$axios.post(this.$API_URL+"/quiz/submit", 
+                {
+                    quiz_id: this.id, 
+                    username: localStorage.getItem('username'),
+                    answer: this.selected
+                },
+                {
+                    headers: {
+                    'x-access-token': localStorage.getItem('jwt')
+                }},
+            )
+            .then((result) => {
+                console.log("gtethoiethoith"+result.data.answer)
+                 this.correct = result.data.answer;
+                    console.log(result.data.answer+"daniel")
+        
                     clearInterval(this.timer);
                     this.remainingTime = this.maxTime;
+
                     setTimeout(() => { 
                         this.selected = ""; 
                         if (this.numQuestion < 6) {
@@ -194,9 +191,9 @@ export default {
                             this.goToResultsScreen();
                         }
                     }, 2000)
-
-                });
-
+            }).catch(error => console.log(error));
+            
+              
                 
                 
                 /*setTimeout(() => { 
@@ -222,6 +219,7 @@ export default {
         },
 
         getColor(choice) {
+            //console.log(choice, this.correct, this.selected)
             if (choice===this.correct && this.selected.length > 0) {
                 return 'green';
             }
@@ -249,7 +247,13 @@ export default {
         },
     },
 
+    created() {
+        this.id = this.$route.params.id;
+        this.numQuestion = this.$route.params.numAnswered-(-1);
+    },
+
     mounted() {
+        
         this.startTimer();
         this.getQuestion();
     }
