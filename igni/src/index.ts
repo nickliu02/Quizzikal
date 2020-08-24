@@ -1,5 +1,4 @@
 import express from 'express';
-import { serverIp } from './config';
 
 import { authRouter } from './routes/auth.router';
 import { quizRouter } from './routes/quiz.router';
@@ -23,4 +22,4 @@ app.use('/quiz', quizRouter);
 app.use('/user', userRouter);
 app.use('/contrib', contributeRouter)
 
-const server = app.listen(3000, serverIp, () => console.log('server started'));
+const server = app.listen(3000, () => console.log('server started'));

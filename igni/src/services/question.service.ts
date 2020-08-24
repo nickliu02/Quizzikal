@@ -1,8 +1,7 @@
 import { client } from './database.service';
 import { Catagory } from '../types/catagories';
 import { Question } from '../types/database.types';
-
-const QUIZ_BATCH_SIZE = 6;
+import { QUESTION_BATCH } from '../game_config';
 
 export const get_questions_of_catagory = (catagories: Catagory[]): Promise<{question_id: number}[]> => client.query(
     `SELECT question_id FROM questions WHERE  
@@ -11,7 +10,7 @@ export const get_questions_of_catagory = (catagories: Catagory[]): Promise<{ques
             .join(' OR ')
     }
     ORDER BY RANDOM() LIMIT $1`,
-    [QUIZ_BATCH_SIZE]
+    [QUESTION_BATCH]
 )
     .then(res => res.rows)
     .catch(e => { console.log(e); return e; } );
