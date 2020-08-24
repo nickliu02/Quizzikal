@@ -26,7 +26,7 @@
                         label="Option 1 (Correct answer)"
                         :counter="60"
                         required
-                        v-model="form.answer"
+                        v-model="form.correct"
                     ></v-text-field>
                 </v-col>
 
@@ -95,7 +95,7 @@ export default {
         return {
             form : {
                 question: '',
-                answer: '',
+                correct: '',
                 wrong: ['','',''],
                 catagory: ''
             },
