@@ -157,7 +157,7 @@
           >
 
             <v-card id="modal">
-              <v-card-title class="headline justify-center">Challenge from {{ modalInfo.player }}
+              <v-card-title class="headline justify-center">Challenge from {{ modalInfo.opponent_username }}
 
                 <div id="icons">
                     <v-tooltip bottom v-for="(subject, i) in subjects" v-bind:key="i">
@@ -183,8 +183,8 @@
                   color="green darken-1"
                   text
                   @click="isChallengeModalOpen = false
-                  $router.push({ name: 'Quiz', params: { numAnswered: ongoingModalInfo.progress, 
-                id: ongoingModalInfo.quiz_id } })"
+                  $router.push({ name: 'Quiz', params: { numAnswered: 0, 
+                id: modalInfo.quiz_id } })"
                 >
                     Accept
                 </v-btn>
@@ -391,7 +391,7 @@ export default {
           username: localStorage.getItem("username"),
         }
       ).then((profile) => {
-        console.log(profile.data)
+        console.log(profile.data.incoming)
         this.challenges = profile.data.incoming,
         this.ongoingChallenges = profile.data.outgoing,
         this.completedChallenges = profile.data.done

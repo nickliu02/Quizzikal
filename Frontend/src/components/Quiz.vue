@@ -217,6 +217,16 @@ export default {
         },
 
         goToResultsScreen() {
+            this.$axios.post(this.$API_URL+"/quiz/results", {
+                quiz_id: this.id
+            },
+            {
+                headers: {'x-access-token': localStorage.getItem('jwt')}
+            })
+            .then(response => {
+                this.correctAnswers = response.data.score;
+                this.ongoing = false;
+            })
             this.ongoing = false;
         },
 
@@ -260,6 +270,7 @@ export default {
     created() {
         this.id = this.$route.params.id;
         this.numQuestion = this.$route.params.numAnswered-(-1);
+        console.log(`OUR QUIZ ID ${this.id}`)
     },
 
     mounted() {

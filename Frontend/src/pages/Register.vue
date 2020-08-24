@@ -41,7 +41,7 @@
                                         type="text"
                                         maxlength="12"
                                         counter
-                                        v-model="form.name"
+                                        v-model="form.real_name"
                                         :rules="[rules.required, rules.min2]"
                                     >
                                     </v-text-field>
@@ -95,7 +95,7 @@ export default {
         return {
             form : {
               username : "",
-              name: "",
+              real_name: "",
               password : "",
               otherpass: ""
             },

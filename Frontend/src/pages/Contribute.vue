@@ -113,7 +113,7 @@ export default {
             headers:  {'x-access-token': localStorage.getItem('jwt') }
             })
             .then(response => {
-                if (response.data.message === "Success"){
+                if (response.data.message === "accepted"){
                     this.form.text = "";
                     this.form.correct = '';
                     this.form.wrong = ['','','']

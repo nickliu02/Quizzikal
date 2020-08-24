@@ -64,35 +64,18 @@ export default {
     },
     mounted: function(){
       console.log("lmao")
-      // this.$axios.post(this.$API_URL+"/profile", {
-      //   headers: {
-      //     'x-access-token': localStorage.getItem('jwt')
-      //   }},
-      //   {
-      //     username: localStorage.getItem('username')
-      //   }
-      //   )
-      //   .then(response => {
-      //       this.profile=response.data;
-      //       console.log(this.profile)
-      //   })
+      this.$axios.get(this.$API_URL+"/profile",
+        {
+        headers: {
+          'x-access-token': localStorage.getItem('jwt')
+        }}
+        )
+        .then(response => {
+            this.profile=response.data;
+            console.log(this.profile)
+        })
 
-      this.profile = {
-        username : "fairnightzz",
-                name : "Zhehai",
-                winrate: 0.69,
-                won:69,
-                lost:21,
-                matches:[
-                  { player: "6558", pc: "3", oc: "2" },
-                  { player: "wgrher", pc: "5", oc: "2" },
-                  { player: "sr5ysrd", pc: "3", oc: "6" },
-                  { player: "rhx567h4eh", pc: "2", oc: "2" },
-                  { player: "z854hwh", pc: "3", oc: "2" },
-                  { player: "12g645", pc: "3", oc: "2" },
-                  { player: "z854hwh", pc: "3", oc: "2" },
-                  { player: "12g645", pc: "3", oc: "2" }] 
-      }
+      
     },
     
 }
