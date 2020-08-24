@@ -8,7 +8,7 @@
         
         <v-form>
             <v-text-field
-                v-model="form.question"
+                v-model="form.text"
                 :counter="120"
                 label="Question"
                 required
@@ -26,7 +26,7 @@
                         label="Option 1 (Correct answer)"
                         :counter="60"
                         required
-                        v-model="form.answer"
+                        v-model="form.correct"
                     ></v-text-field>
                 </v-col>
 
@@ -94,8 +94,8 @@ export default {
     data() {
         return {
             form : {
-                question: '',
-                answer: '',
+                text: '',
+                correct: '',
                 wrong: ['','',''],
                 catagory: ''
             },
@@ -114,7 +114,7 @@ export default {
             })
             .then(response => {
                 if (response.data.message === "Success"){
-                    this.form.question = "";
+                    this.form.text = "";
                     this.form.correct = '';
                     this.form.wrong = ['','','']
                     this.form.catagory = '';
