@@ -27,40 +27,47 @@ userRouter.get('/games', check_auth, async (req: any, res: any) => {
         .filter((quiz: Quiz) => quiz.challengee_username == username)
         .filter((quiz: Quiz) => quiz.challengee_results.split(',').length-1 === 0)
         .map((quiz: Quiz) => ({
-            quiz_ip: quiz.quiz_id,
+            quiz_id: quiz.quiz_id,
             opponent_username: quiz.challenger_username,
         }));
 
     const outgoing = quizzes
-        .filter((quiz: Quiz) => quiz.challenger_results.split(',').length-1 < QUESTION_BATCH && quiz.challengee_results.split(',').length-1 < QUESTION_BATCH)
+        .filter((quiz: Quiz) => (quiz.challengee_username == username || quiz.challenger_username == username))
+        .filter((quiz: Quiz) => {
+            const challenger_count = quiz.challenger_results.split(',').length-1;
+            const challengee_count = quiz.challengee_results.split(',').length-1;
+
+            return 0<challenger_count && challenger_count<QUESTION_BATCH && 0<challengee_count && challengee_count<QUESTION_BATCH; 
+        })
         .map((quiz: Quiz) => ({
-            quiz_ip: quiz.quiz_id,
+            quiz_id: quiz.quiz_id,
             opponent_username: is_challenger(username, quiz) ? quiz.challengee_username : quiz.challenger_username,
-            progress: () => {
+            progress: (function() {
                 const results = is_challenger(username, quiz) ? quiz.challenger_results : quiz.challengee_results;
                 return results.length-1;
-            }
+            })()
         }));
 
     const done = quizzes
+        .filter((quiz: Quiz) => (quiz.challengee_username == username || quiz.challenger_username == username))
         .filter((quiz: Quiz) => quiz.challenger_results.split(',').length-1 === QUESTION_BATCH && quiz.challengee_results.split(',').length-1 === QUESTION_BATCH)
         .map((quiz: Quiz) => ({
-            quiz_ip: quiz.quiz_id,
+            quiz_id: quiz.quiz_id,
             opponent_username: quiz.challenger_username,
-            your_score: () => {
+            your_score: (function() {
                 const results = is_challenger(username, quiz) ? quiz.challenger_results : quiz.challengee_results;
                 return results
                     .split(',')
                     .filter((result: string) => result === '1')
                     .length
-            },
-            opponent_score: () => {
+            })(),
+            opponent_score: (function() {
                 const results = is_challenger(username, quiz) ? quiz.challengee_results : quiz.challenger_results;
                 return results
                     .split(',')
                     .filter((result: string) => result === '1')
                     .length
-            }
+            })()
         }));
     
     res.send({
