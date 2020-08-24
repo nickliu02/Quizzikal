@@ -93,7 +93,8 @@ export default {
                   { player: "z854hwh", pc: "3", oc: "2" },
                   { player: "12g645", pc: "3", oc: "2" }] 
       }
-    }
+    },
+    
 }
 </script>
 
