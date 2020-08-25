@@ -39,8 +39,8 @@
                             <li v-for="(choice, i) in choices" v-bind:key="i"
                                 @click="selectOption(choice)"
                             >
-                                <v-btn width="320" height="100" v-bind:color="btnColors[getColor(choice)]">
-                                    <div ><p :style="{'padding': '1px','overflow-wrap':'normal'}">{{ choice }}</p></div>
+                                <v-btn class="btn" width="320" height="100" v-bind:color="btnColors[getColor(choice)]">
+                                    <div><p style="width: 300px; word-break:normal; white-space: normal; margin-top: 12px;">{{ choice }}</p></div>
                                 </v-btn>
                             </li>
                         </ul>
@@ -337,5 +337,8 @@ h3 {
 #card div {
     overflow-wrap: break-word
 }
+
+#card { display: flex;
+        flex-wrap: wrap; }
 
 </style>
