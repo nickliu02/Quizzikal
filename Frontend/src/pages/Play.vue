@@ -8,10 +8,6 @@
             <v-btn depressed x-large color="white" @click.stop="isNewChallengeModalOpen = true, selectedSubjects=[false, false, false, false, false, false]">New Challenge</v-btn>
           </div>
 
-          <div>
-            <v-btn depressed x-large color="white" @click.stop="isSoloModalOpen = true">Solo Play</v-btn>
-          </div>
-          
         </div>
 
         <v-divider color="white" width="830" class="mx-auto my-5"></v-divider>
@@ -198,7 +194,7 @@
         >
 
           <v-card id="modal">
-            <v-card-title class="headline justify-center">New Challenge
+            <v-card-title class="headline justify-center">New Challenge (nickliu02 works)
               <div id="selectIcons">
               
                   <v-text-field
